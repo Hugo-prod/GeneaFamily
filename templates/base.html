@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+	<title>{% block title %}GeneaFamily{% endblock %}</title>
+</head>
+<body>
+<div class="container">
+	<div class="row"><h2>{% block subtitle %}{% endblock %}</h2></div>
+	<div class="row">{% block content %}{% endblock %}</div>
+</div>
+<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block extra_js %}
+{% endblock %}
+</body>
+</html>

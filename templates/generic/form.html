@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<button type="submit" class="btn btn-primary">Valider</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier l'individu : "{{ object.first_name }} - {{ object.family_name }}" {% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<a class="btn btn-warning" href="{% url 'core:member_detail' object.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les individus:{% endblock %}
+
+{% block content %}
+
+{% if not object_list %}
+<p>Aucun individu à afficher, pour créer un individu maintenant <a href="{% url 'core:create_member' %}">cliquez ici</a>.</p>
+{% endif %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Prénom</th>
+			<th>Nom de famille</th>
+			<th>Genre</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for member in object_list %}
+		<tr>
+			<th scope="row">{{ member.pk }}</th>
+			<td><a href="{% url 'core:member_detail' member.pk %}">{{ member.first_name }}</a></td>
+			<td>{{ member.family_name }}</td>
+			<td>{{ member.get_gender_display }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

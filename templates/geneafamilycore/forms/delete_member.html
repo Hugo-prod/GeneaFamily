@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block subtitle %}Supprimer l'individu: "{{ object.first_name }} {{ object.family_name }}" {% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	<p>Valider la suppression de "{{ object.first_name }} {{ object.family_name }}" ? </p>
+	<a class="btn btn-primary" href="{% url 'core:member_detail' object.pk %}">Annuler</a>
+	<button class="btn btn-danger" type="submit" style="cursor: pointer;">Supprimer</button>
+</form>
+{% endblock %}

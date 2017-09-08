@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}{{ object.first_name }} {{ object.family_name }}{% endblock %}
+
+{% block content %}
+<div>
+	<h4>Identité:</h4>
+	<p><label>Prénom: </label>{{ object.first_name }}</p>
+	<p><label>Nom: </label>{{ object.family_name }}</p>
+	<p><label>Genre: </label>{{ object.get_gender_display }}</p>
+	<a class="btn btn-warning" href="{% url 'core:update_member' object.pk %}">Modifier</a>
+	<a class="btn btn-danger" href="{% url 'core:delete_member' object.pk %}">Supprimer</a>
+</div>
+{% endblock %}
