@@ -47,6 +47,7 @@ local_settings.py
 
 # Todo sublime text
 *.todo
+*.TODO
 
 # Commit Memo
 next_commit.txt

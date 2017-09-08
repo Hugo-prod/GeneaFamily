@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Detail du type d'évènement "{{ object }}"{% endblock %}
+
+{% block content %}
+<div>
+	<h4>Type d'évènement:</h4>
+	<p><label>Nom:</label>{{ object.name }}</p>
+	<p><label>Type de temps:</label>{{ object.get_time_period_type_display }}</p>
+	<p><label>Description:</label>{{ object.description|truncatechars:50 }}</p>
+	<a class="btn btn-warning" href="{% url 'core:update_event_type' object.slug object.pk %}">Modifier</a>
+	<a class="btn btn-danger" href="{% url 'core:delete_event_type' object.slug object.pk %}">Supprimer</a>
+</div>
+{% endblock %}

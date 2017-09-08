@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Erreur: Vous ne pouvez pas effectuer cette action !{% endblock %}
+
+{% block content %}
+	{% if exception %}
+		<p>{{ exception }}</p>
+	{% else %}
+		<p>Erreur: Vous ne pouvez pas effectuer cette action !</p>
+	{% endif %}
+{% endblock %}

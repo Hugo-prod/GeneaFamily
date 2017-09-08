@@ -51,6 +51,7 @@ urlpatterns = [
 			template_name='geneafamilycore/all_members.html'),
 				name='all_members'),
 
+
 ############
 # LOCALITY #
 ############
@@ -94,4 +95,45 @@ urlpatterns = [
 				name='all_locations'),
 
 
+##############
+# EVENT TYPE #
+##############
+
+	# Create a event_type
+	url(r'^event_type/create$',
+		CreateView.as_view(
+			form_class=EventTypeForm,
+			template_name='geneafamilycore/forms/create_event_type.html'),
+				name='create_event_type'),
+
+	# Update a event_type
+	url(r'^event_type/(?P<slug>[-\w]+)-(?P<pk>\d+)/update$',
+		UpdateView.as_view(
+			model=EventType,
+			form_class=UpdateEventTypeForm,
+			template_name='geneafamilycore/forms/update_event_type.html'),
+				name='update_event_type'),
+
+	# Delete event_type
+	url(r'^event_type/(?P<slug>[-\w]+)-(?P<pk>\d+)/delete$',
+		DeleteView.as_view(
+			model=EventType,
+			template_name='geneafamilycore/forms/delete_event_type.html',
+			success_url='/'),
+				name='delete_event_type'),
+
+	# EventType's detail
+	url(r'^event_type/(?P<slug>[-\w]+)-(?P<pk>\d+)$',
+		DetailView.as_view(
+			model=EventType,
+			template_name='geneafamilycore/event_type_detail.html'),
+				name='event_type_detail'),
+
+	# All EventTypes
+	url(r'^event_type/all$',
+		ListView.as_view(
+			model=EventType,
+			paginate_by=20,
+			template_name='geneafamilycore/all_event_types.html'),
+				name='all_event_types'),
 ]

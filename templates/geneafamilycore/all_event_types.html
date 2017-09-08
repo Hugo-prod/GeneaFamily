@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les type d'évènement:{% endblock %}
+
+{% block content %}
+
+{% if not object_list %}
+<p>Aucun type évènement à afficher, pour en créer un maintenant <a href="{% url 'core:create_event_type' %}">cliquez ici</a>.</p>
+{% endif %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Type</th>
+			<th>Type de temps</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for event_type in object_list %}
+		<tr>
+			<th scope="row">{{ event_type.pk }}</th>
+			<td><a href="{% url 'core:event_type_detail' event_type.slug event_type.pk %}">{{ event_type.name }}</a></td>
+			<td>{{ event_type.get_time_period_type_display }}</td>
+			<td>{{ event_type.description|truncatechars:50 }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

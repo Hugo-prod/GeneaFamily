@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier le type d'évènement "{{ object.name }}"{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	<p>Attention: la modification de ce type d'évènement, affectera aussi tous les évènement s'y réferant !</p>
+	{% buttons %}
+		<a class="btn btn-warning" href="{% url 'core:event_type_detail' object.slug object.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+	{% endbuttons %}
+</form>
+{% endblock %}
