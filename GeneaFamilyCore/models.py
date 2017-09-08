@@ -28,6 +28,9 @@ class Locality(models.Model):
 	def get_absolute_url(self):
 		return reverse('core:locality_detail', args=[int(self.id)])
 
+	class Meta:
+		ordering = ['country']
+
 
 class EventType(models.Model):
 	""" EventType """
@@ -75,6 +78,9 @@ class EventType(models.Model):
 	def __str__(self):
 		return self.name
 
+	class Meta:
+		ordering = ['name']
+
 
 class Member(models.Model):
 	""" Member """
@@ -99,3 +105,6 @@ class Member(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('core:member_detail', args=[int(self.id)])
+
+	class Meta:
+		ordering = ['family_name']
