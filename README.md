@@ -4,10 +4,10 @@ __GeneaFamily__ is a Django project for make a family tree.
 This project is written in Python 3.6 and made with Django 1.11.
 
 #### Current features:
-**C/U/D/R** == Create/Update/Delete/Read.
+**C/R/U/D** == Create/Read/Update/Delete.
 
-- C/U/D/R a member
-- C/U/D/R a event type (Not a event)
+- C/R/U/D a member
+- C/R/U/D a event type (Not a event)
 
 #### Next feature:
 - Assign an event to a member (Birth, Death...)
