@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 from GeneaFamilyCore.models import Locality
 from GeneaFamilyCore.forms.location import LocalityForm
 
-urlpatterns = [
+location_urlpatterns = [
 
 	############
 	# LOCALITY #

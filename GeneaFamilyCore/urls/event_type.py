@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 from GeneaFamilyCore.models import EventType
 from GeneaFamilyCore.forms.event_type import EventTypeForm, UpdateEventTypeForm
 
-urlpatterns = [
+event_type_urlpatterns = [
 
 	##############
 	# EVENT TYPE #

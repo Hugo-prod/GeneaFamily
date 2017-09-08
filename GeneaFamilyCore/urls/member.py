@@ -4,7 +4,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 from GeneaFamilyCore.models import Member
 from GeneaFamilyCore.forms.member import MemberForm
 
-urlpatterns = [
+member_urlpatterns = [
 
 	##########
 	# MEMBER #
