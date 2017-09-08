@@ -7,8 +7,10 @@
 	<h4>Type d'évènement:</h4>
 	<p><label>Nom:</label>{{ object.name }}</p>
 	<p><label>Type de temps:</label>{{ object.get_time_period_type_display }}</p>
-	<p><label>Description:</label>{{ object.description|truncatechars:50 }}</p>
-	<a class="btn btn-warning" href="{% url 'core:update_event_type' object.slug object.pk %}">Modifier</a>
-	<a class="btn btn-danger" href="{% url 'core:delete_event_type' object.slug object.pk %}">Supprimer</a>
+	<p><label>Description:</label>{{ object.description }}</p>
+	{% if object.deleteable %}
+		<a class="btn btn-warning" href="{% url 'core:update_event_type' object.slug object.pk %}">Modifier</a>
+		<a class="btn btn-danger" href="{% url 'core:delete_event_type' object.slug object.pk %}">Supprimer</a>
+	{% endif %}
 </div>
 {% endblock %}
