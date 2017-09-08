@@ -1,6 +1,31 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+
+class Locality(models.Model):
+	""" Locality """
+
+	country = models.CharField(
+		max_length=100,
+		verbose_name="Pays")
+
+	city = models.CharField(
+		max_length=100,
+		blank=True,
+		verbose_name="Ville")
+
+	additional_address_information = models.CharField(
+		max_length=255,
+		blank=True,
+		verbose_name="Complément d'information de l'adresse")
+
+	latitude = models.FloatField(blank=True, null=True)
+	longitude = models.FloatField(blank=True, null=True)
+
+	def get_absolute_url(self):
+		return reverse('core:locality_detail', args=[int(self.id)])
+
+
 class Member(models.Model):
 	""" Member """
 

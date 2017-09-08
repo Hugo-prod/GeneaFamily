@@ -2,11 +2,18 @@
 
 {% block subtitle %}Accueil{% endblock %}
 {% block content %}
-<div>
+<div class="col">
 	<h4>Membre menu:</h4>
 	<ul>
 		<li><a href="{% url 'core:create_member' %}">Créer un individu</a></li>
 		<li><a href="{% url 'core:all_members' %}">Tous les individus</a></li>
+	</ul>
+</div>
+<div class="col">
+	<h4>Lieu menu:</h4>
+	<ul>
+		<li><a href="{% url 'core:create_locality' %}">Créer un lieu</a></li>
+		<li><a href="{% url 'core:all_locations' %}">Tous les lieux</a></li>
 	</ul>
 </div>
 {% endblock %}

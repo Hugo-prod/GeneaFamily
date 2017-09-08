@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block subtitle %}Supprimer le lieu{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	<div>
+		<p><label>Pays: </label>{{ object.country }}</p>
+		<p><label>Ville: </label>{{ object.city }}</p>
+		<p><label>Complément d'adresse: </label>{{ object.additional_address_information }}</p>
+		<p><label>Latitude: </label>{% if object.latitude %}{{ object.latitude }}{% endif %}</p>
+		<p><label>Longitude: </label>{% if object.longitude %}{{ object.longitude }}{% endif %}</p>
+	</div>
+	{% csrf_token %}
+	<p>Valider la suppression de ce lieu ? </p>
+	<p>Attention: en supprimant ce lieu, 
+	tous les évenements s'y référant n'auront plus de lieu défini</p>
+	<a class="btn btn-primary" href="{% url 'core:locality_detail' object.pk %}">Annuler</a>
+	<button class="btn btn-danger" type="submit" style="cursor: pointer;">Supprimer</button>
+</form>
+{% endblock %}
