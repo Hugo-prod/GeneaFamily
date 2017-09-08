@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
 from GeneaFamilyCore.models import EventType
-from GeneaFamilyCore.forms import EventTypeForm, UpdateEventTypeForm
+from GeneaFamilyCore.forms.event_type import EventTypeForm, UpdateEventTypeForm
 
 urlpatterns = [
 

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
 from GeneaFamilyCore.models import Locality
-from GeneaFamilyCore.forms import LocalityForm
+from GeneaFamilyCore.forms.location import LocalityForm
 
 urlpatterns = [
 

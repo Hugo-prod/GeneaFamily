@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
 from GeneaFamilyCore.models import Member
-from GeneaFamilyCore.forms import MemberForm
+from GeneaFamilyCore.forms.member import MemberForm
 
 urlpatterns = [
 
