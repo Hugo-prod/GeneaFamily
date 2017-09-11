@@ -8,9 +8,10 @@ This project is written in Python 3.6 and made with Django 1.11.
 
 - C/R/U/D a member
 - C/R/U/D a event type (Not a event)
+- C/R/U/D a event 
 
 #### Next feature:
-- Assign an event to a member (Birth, Death...)  
+- Make a relationship between members
 
 #### How to install:
 Clone this repo:  
