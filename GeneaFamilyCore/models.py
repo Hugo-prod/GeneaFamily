@@ -59,18 +59,10 @@ class EventType(models.Model):
 		<p>Attention: Après validation ce paramètre 
 		n\'est plus modifiable !</p>''')
 
-	deleteable = models.BooleanField(default=True)
-
 	description = models.CharField(
 		max_length=512,
 		blank=True,
 		help_text='Description du type de l\'èvenement')
-
-	def delete(self, *args, **kwargs):
-		if not self.deleteable:
-			raise PermissionDenied(
-				'Vous ne pouvez pas supprimer ce type d\'évènement')
-		super().delete(*args, **kwargs)
 
 	def get_absolute_url(self):
 		return reverse('core:event_type_detail', args=[self.slug, int(self.id)])
@@ -80,6 +72,50 @@ class EventType(models.Model):
 
 	class Meta:
 		ordering = ['name']
+
+
+class Event(models.Model):
+	""" Event """
+
+	event_type_fk = models.ForeignKey(
+		EventType,
+		verbose_name='Type d\'évènement')
+
+	title = models.CharField(
+		max_length=100,
+		verbose_name='Titre')
+
+	start_date = models.DateField(
+		null=True,
+		blank=True,
+		verbose_name='Date')
+
+	start_date_is_approximately = models.BooleanField(
+		default=False,
+		verbose_name='Environ',
+		help_text='Cochez, si la date est une approximation')
+
+	end_date = models.DateField(
+		null=True,
+		blank=True,
+		verbose_name='Date de fin')
+
+	end_date_is_approximately = models.BooleanField(
+		default=False,
+		verbose_name='Environ',
+		help_text='Cochez, si la date est une approximation')
+
+	content = models.TextField(
+		max_length=1000,
+		null=True,
+		verbose_name='Contenu')
+
+	# locality_fk = models.ForeignKey(
+	# 	Locality,
+	# 	verbose_name='Lieu')
+
+	class Meta:
+		ordering = ['id']
 
 
 class Member(models.Model):
@@ -106,5 +142,39 @@ class Member(models.Model):
 	def get_absolute_url(self):
 		return reverse('core:member_detail', args=[int(self.id)])
 
+	def __str__(self):
+		return '{} {}'.format(self.first_name, self.family_name)
+
+	def get_events(self):
+		all_events = []
+		for event_type in EventType.objects.all():
+			if MemberEvent.objects.filter(
+				member_fk=self,
+				event_fk__event_type_fk__name=event_type.name).exists():
+				all_events.append({
+					'type': event_type,
+					'list':MemberEvent.objects.filter(
+						member_fk=self,
+						event_fk__event_type_fk__name=event_type.name)
+					})
+		return all_events
+
 	class Meta:
 		ordering = ['family_name']
+
+
+class MemberEvent(models.Model):
+	""" MemberEvent: Associate an event to a member """
+
+	member_fk = models.ForeignKey(Member)
+	event_fk = models.ForeignKey(Event)
+
+	def delete(self):
+		Event.objects.get(pk=self.event_fk.pk).delete()
+		super(MemberEvent, self).delete()
+
+	def get_absolute_url(self):
+		return reverse('core:member_detail', args=[int(self.member_fk.pk)])
+
+	class Meta:
+		ordering = ['id']

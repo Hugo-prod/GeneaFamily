@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Detail de l'évènement "{{ object.event_fk.event_type_fk.name }}" de "{{ object.member_fk }}" {% endblock %}
+
+{% block content %}
+<div>
+	<h4>Évènement {{ object.event_fk.event_type_fk.name }}{% if object.event_fk.title %} - {{ object.event_fk.title }}{% endif %}</h4>
+	<p><label>Individu:</label>{{ object.member_fk }}</p>
+	{% if object.event_fk.content %}
+		<p><label>Contenu:</label></p>
+		<p>{{ object.event_fk.content }}</p>
+	{% endif %}
+	{% include 'geneafamilycore/event/detail_blocks/date_display.html' with event=object.event_fk %}
+	<a href="{% url 'core:update_event' member_event_pk=object.pk event_type_pk=object.event_fk.event_type_fk.pk %}">Modifier</a>
+	<a href="{% url 'core:delete_member_event' object.pk %}">Supprimer</a>
+</div>
+{% endblock %}

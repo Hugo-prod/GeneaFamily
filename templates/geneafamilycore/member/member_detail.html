@@ -3,12 +3,84 @@
 {% block subtitle %}{{ object.first_name }} {{ object.family_name }}{% endblock %}
 
 {% block content %}
-<div>
-	<h4>Identité:</h4>
-	<p><label>Prénom: </label>{{ object.first_name }}</p>
-	<p><label>Nom: </label>{{ object.family_name }}</p>
-	<p><label>Genre: </label>{{ object.get_gender_display }}</p>
-	<a class="btn btn-warning" href="{% url 'core:update_member' object.pk %}">Modifier</a>
-	<a class="btn btn-danger" href="{% url 'core:delete_member' object.pk %}">Supprimer</a>
+<div class="col-12">
+	<div class="card">
+		<div class="card-header">
+			<div class="row">
+				<h4 class="col card-title">Identité:</h4>
+				<div class="col-1 dropdown">
+					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="{% url 'core:update_member' object.pk %}">Modifier</a>
+						<a class="dropdown-item" href="{% url 'core:delete_member' object.pk %}">Supprimer</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<p><label>Prénom: </label>{{ object.first_name }}</p>
+			<p><label>Nom: </label>{{ object.family_name }}</p>
+			<p><label>Genre: </label>{{ object.get_gender_display }}</p>
+		</div>
+		<div class="card-footer">
+		</div>
+	</div>
+</div>
+
+<div class="col-12">
+	<div class="card">
+		<div class="card-header">
+			<div class="row">
+				<h4 class="col card-title">Évènement:</h4>
+				<div class="col-1 dropdown">
+					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Créer</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						{% for event_type in all_event_types %}
+							<a class="dropdown-item" href="{% url 'core:create_event' object.pk event_type.pk %}">{{ event_type.name }}</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			{% for event_type in all_events %}
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4>{{ event_type.type.name }}:</h4>
+						</div>
+						<div class="card-body">
+							{% for event in event_type.list %}
+								<div class="card">
+									<div class="card-header">
+										<div class="row">
+											<h5 class="col card-title">{{ forloop.counter }}. {{ event_type.type.name }} - {{ event.event_fk.title }}:</h5>
+											<div class="col-2 dropdown">
+												<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+													<a class="dropdown-item" href="{% url 'core:update_event' member_event_pk=event.pk event_type_pk=event.event_fk.event_type_fk.pk %}">Modifier</a>
+													<a class="dropdown-item" href="{% url 'core:delete_member_event' event.pk %}">Supprimer</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-6">
+												{% include 'geneafamilycore/event/detail_blocks/date_display.html' with event=event.event_fk %}
+											</div>
+											<div class="col-6">
+												<p>{{ event.event_fk.content }}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 </div>
 {% endblock %}

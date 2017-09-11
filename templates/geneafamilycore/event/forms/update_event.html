@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier l'évènement "{{ member_event.event_fk.event_type_fk.name }}" de "{{ member_event.member_fk }}" {% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<a class="btn btn-warning" href="{% url 'core:member_detail' member_event.member_fk.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

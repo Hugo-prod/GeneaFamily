@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from .member import member_urlpatterns
 from .location import location_urlpatterns
+from .event import event_urlpatterns
 from .event_type import event_type_urlpatterns
 
 urlpatterns = [
@@ -15,6 +16,9 @@ urlpatterns += member_urlpatterns
 
 # Location urls
 urlpatterns += location_urlpatterns
+
+# Event urls
+urlpatterns += event_urlpatterns
 
 # Event_Type urls
 urlpatterns += event_type_urlpatterns

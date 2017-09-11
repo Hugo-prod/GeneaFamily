@@ -34,9 +34,6 @@ Make migrations:
 Make DB:  
 `./manage.py migrate`  
 
-Load a few datas (Important ! ):  
-`./manage.py loaddata GeneaFamily/fixtures/EventType.json`  
-
 Launch server:  
 `./manager.py runserver`  
 

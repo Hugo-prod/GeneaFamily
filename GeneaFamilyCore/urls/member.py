@@ -3,6 +3,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 
 from GeneaFamilyCore.models import Member
 from GeneaFamilyCore.forms.member import MemberForm
+from GeneaFamilyCore.views.member import MemberDetail
 
 member_urlpatterns = [
 
@@ -34,7 +35,7 @@ member_urlpatterns = [
 
 	# Member's detail
 	url(r'^member/(?P<pk>\d+)$',
-		DetailView.as_view(
+		MemberDetail.as_view(
 			model=Member,
 			template_name='geneafamilycore/member/member_detail.html'),
 				name='member_detail'),

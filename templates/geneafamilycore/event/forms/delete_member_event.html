@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Supprimer l'évènement "{{ object.event_fk.event_type_fk.name }}" de "{{ object.member_fk }}" ?{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	<p>Valider la suppression de cet évènement ? </p>
+	<a class="btn btn-primary" href="{% url 'core:member_detail' object.member_fk.pk %}">Annuler</a>
+	<button class="btn btn-danger" type="submit" style="cursor: pointer;">Supprimer</button>
+</form>
+{% endblock %}

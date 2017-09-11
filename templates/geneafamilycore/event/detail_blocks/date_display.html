@@ -1,0 +1,16 @@
+{% if oneline %}
+	{% if event.event_type_fk.time_period_type == 'D' %}
+		{{ event.start_date }}{% if event.start_date_is_approximately %}*{% endif %}
+	{% else %}
+		{{ event.start_date }}{% if event.start_date_is_approximately %}*{% endif %}
+		{{ event.end_date }}Fin{% if event.end_date_is_approximately %}*{% endif %}
+	{% endif %}
+{% else %}
+	{% if event.event_type_fk.time_period_type == 'D' %}
+		<p><label>Date{% if event.start_date_is_approximately %}*{% endif %}:</label>{% if event.start_date %}{{ event.start_date }}{% else %}...{% endif%}</p>
+	{% else %}
+		<h6>Date:</h6>
+		<p><label>Début{% if event.start_date_is_approximately %}*{% endif %}:</label>{% if event.start_date %}{{ event.start_date }}{% else %}...{% endif%}</p>
+		<p><label>Fin{% if event.end_date_is_approximately %}*{% endif %}:</label>{% if event.end_date %}{{ event.end_date }}{% else %}...{% endif%}</p>
+	{% endif %}
+{% endif %}

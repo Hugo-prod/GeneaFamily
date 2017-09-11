@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les évènements:{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Type d'évènement</th>
+			<th>Titre</th>
+			<th>Personne</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for member_event in object_list %}
+		<tr>
+			<th scope="row">{{ member_event.pk }}</th>
+			<td><a href="{% url 'core:event_type_detail' member_event.event_fk.event_type_fk.pk %}">{{ member_event.event_fk.event_type_fk.name }}</a></td>
+			<td><a href="{% url 'core:event_detail' member_event.pk %}"></a>{{ member_event.event_fk.title }}</td>
+			<td>{{ member_event.member_fk }}</td>
+			<td>{% include 'geneafamilycore/event/detail_blocks/date_display.html' with event=member_event.event_fk oneline=True%}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}
