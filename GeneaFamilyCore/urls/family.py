@@ -19,6 +19,7 @@ family_urlpatterns = [
 	# Update a family
 	url(r'^family/(?P<pk>\d+)/update$',
 		UpdateView.as_view(
+			model=Family,
 			form_class=FamilyForm,
 			template_name='geneafamilycore/family/forms/update_family.html'),
 				name='update_family'),

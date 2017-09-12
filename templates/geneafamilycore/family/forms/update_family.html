@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier la famille "{{ object.father_fk }}" {% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<a class="btn btn-warning" href="{% url 'core:home' %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Créer</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

@@ -195,10 +195,13 @@ class Family(models.Model):
 		limit_choices_to={'gender': 'M'})
 
 	def full_clean(self, exclude=None, validate_unique=True):
-		if Family.objects.filter(
+		family_list = Family.objects.filter(
 			mother_fk=self.mother_fk,
-			father_fk=self.father_fk).exists():
-			raise ValidationError('Cette famille existe déjà !')
+			father_fk=self.father_fk)
+		if family_list:
+			for family in family_list:
+				if family.pk != self.pk:
+					raise ValidationError('Cette famille existe déjà !')
 
 	def get_absolute_url(self):
 		return reverse('core:family_detail', args=[int(self.pk)])
