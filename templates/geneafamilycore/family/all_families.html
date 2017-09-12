@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de toutes les familles:{% endblock %}
+
+{% block content %}
+
+{% if not object_list %}
+<p>Aucune famille à afficher, pour en créer une maintenant <a href="{% url 'core:create_family' %}">cliquez ici</a>.</p>
+{% endif %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Famille</th>
+			<th>Père</th>
+			<th>Mère</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for family in object_list %}
+		<tr>
+			<th scope="row">{{ family.pk }}</th>
+			<td><a href="{% url 'core:family_detail' family.pk %}">{{ family.father_fk.family_name }}</a></td>
+			<td>{{ family.father_fk }}</td>
+			<td>{{ family.mother_fk }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

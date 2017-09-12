@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Detail de la famille "{{ object.father_fk }}"{% endblock %}
+
+{% block content %}
+<div>
+	<p><label>Père:</label>{{ object.father_fk }}</p>
+	<p><label>Mère:</label>{{ object.mother_fk }}</p>
+	<p><label>Enfants:</label></p>
+	<ul>
+		<li></li>
+	</ul>
+	<a class="btn btn-warning" href="{% url 'core:update_family' object.pk %}">Modifier</a>
+	<a class="btn btn-danger" href="{% url 'core:delete_family' object.pk %}">Supprimer</a>
+</div>
+{% endblock %}

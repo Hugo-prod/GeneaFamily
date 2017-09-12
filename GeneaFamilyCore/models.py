@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 
 from autoslug import AutoSlugField
 
@@ -178,3 +178,37 @@ class MemberEvent(models.Model):
 
 	class Meta:
 		ordering = ['id']
+
+
+class Family(models.Model):
+
+	mother_fk = models.ForeignKey(
+		Member,
+		related_name='mother',
+		verbose_name='Mère',
+		limit_choices_to={'gender': 'W'})
+	
+	father_fk = models.ForeignKey(
+		Member,
+		related_name='father',
+		verbose_name='Père',
+		limit_choices_to={'gender': 'M'})
+
+	def full_clean(self, exclude=None, validate_unique=True):
+		if Family.objects.filter(
+			mother_fk=self.mother_fk,
+			father_fk=self.father_fk).exists():
+			raise ValidationError('Cette famille existe déjà !')
+
+	def get_absolute_url(self):
+		return reverse('core:family_detail', args=[int(self.pk)])
+
+	class Meta:
+		ordering = ['id']
+
+
+class Child(models.Model):
+
+	family_fk = models.ForeignKey(Family)
+
+	child_fk = models.ForeignKey(Member)
