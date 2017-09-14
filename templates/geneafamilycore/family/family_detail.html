@@ -8,8 +8,14 @@
 	<p><label>Mère:</label>{{ object.mother_fk }}</p>
 	<p><label>Enfants:</label></p>
 	<ul>
-		<li></li>
+		{% for child in children %}
+			<li><a href="{% url 'core:member_detail' child.child_fk.pk %}">{{ child.child_fk }}</a> 
+			- <a href="{% url 'core:remove_child' child.pk %}" title="Supprimer {{ child.child_fk }} de la famille">Enlever</a></li>
+		{% empty %}
+			<li>Pas d'enfant</li>
+		{% endfor %}
 	</ul>
+	<a class="btn btn-primary" href="{% url 'core:add_child' object.pk %}">Ajouter un enfant</a>
 	<a class="btn btn-warning" href="{% url 'core:update_family' object.pk %}">Modifier</a>
 	<a class="btn btn-danger" href="{% url 'core:delete_family' object.pk %}">Supprimer</a>
 </div>

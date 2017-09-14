@@ -1,7 +1,7 @@
 from django.db import models
+from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ValidationError
-
 from autoslug import AutoSlugField
 
 
@@ -212,6 +212,9 @@ class Family(models.Model):
 
 class Child(models.Model):
 
+
 	family_fk = models.ForeignKey(Family)
 
-	child_fk = models.ForeignKey(Member)
+	child_fk = models.ForeignKey(
+		Member,
+		verbose_name='Enfant')

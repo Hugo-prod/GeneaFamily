@@ -3,12 +3,13 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 
 from GeneaFamilyCore.models import Family
 from GeneaFamilyCore.forms.family import FamilyForm
+from GeneaFamilyCore.views.family import *
 
 family_urlpatterns = [
 
-	############
+	##########
 	# FAMILY #
-	############
+	##########
 	# Create a family
 	url(r'^family/create$',
 		CreateView.as_view(
@@ -34,7 +35,7 @@ family_urlpatterns = [
 
 	# Family's detail
 	url(r'^family/(?P<pk>\d+)$',
-		DetailView.as_view(
+		FamilyDetail.as_view(
 			model=Family,
 			template_name='geneafamilycore/family/family_detail.html'),
 				name='family_detail'),

@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from GeneaFamilyCore.models import Family, Member
+from GeneaFamilyCore.models import Family
 
 
 class FamilyForm(ModelForm):

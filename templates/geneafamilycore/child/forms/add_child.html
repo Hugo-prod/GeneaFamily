@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Ajouter un enfant à la famille "{{ family.father_fk }}":{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		<a class="btn btn-warning" href="{% url 'core:family_detail' family.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Créer</button>
+	{% endbuttons %}
+</form>
+{% endblock %}

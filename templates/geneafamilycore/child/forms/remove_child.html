@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Enlever "{{ object.child_fk }}" de la famille {{ object.family_fk.father_fk }}?{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form">
+	{% csrf_token %}
+	<p>Valider la suppression de "{{ object.child_fk }}" de la famille {{ object.family_fk.father_fk }} ?</p>
+	<a class="btn btn-primary" href="{% url 'core:family_detail' object.family_fk.pk %}">Annuler</a>
+	<button class="btn btn-danger" type="submit" style="cursor: pointer;">Supprimer</button>
+</form>
+{% endblock %}

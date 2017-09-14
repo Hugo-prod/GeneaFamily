@@ -6,6 +6,7 @@ from .location import location_urlpatterns
 from .event import event_urlpatterns
 from .event_type import event_type_urlpatterns
 from .family import family_urlpatterns
+from .child import child_urlpatterns
 
 urlpatterns = [
 	url(r'^$', 
@@ -26,3 +27,6 @@ urlpatterns += event_type_urlpatterns
 
 # Family urls
 urlpatterns += family_urlpatterns
+
+# Child urls
+urlpatterns += child_urlpatterns
