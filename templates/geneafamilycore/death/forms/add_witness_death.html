@@ -1,0 +1,18 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Ajouter un témoin à la naissance de "{{ member }}":{% endblock %}
+
+{% block form_title %}Ajouter un témoin à la naissance de "{{ member }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-sm btn-warning" href="/">Annuler</a>
+			<button type="submit" class="btn btn-primary">Valider</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

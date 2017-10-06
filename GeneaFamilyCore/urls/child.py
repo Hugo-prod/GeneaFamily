@@ -1,9 +1,9 @@
 from django.conf.urls import url
 from django.views.generic import CreateView, DeleteView
 
-from GeneaFamilyCore.forms.child import ChildForm
 from GeneaFamilyCore.models import Child
-from GeneaFamilyCore.views.child import AddChild
+from GeneaFamilyCore.forms.child import ChildForm
+from GeneaFamilyCore.views.child import AddChild, DeleteChild
 
 child_urlpatterns = [
 
@@ -21,9 +21,8 @@ child_urlpatterns = [
 	# Remove a child
 	# PK: id Child
 	url(r'^child/(?P<pk>\d+)/remove/child$',
-		DeleteView.as_view(
+		DeleteChild.as_view(
 			model=Child,
-			success_url='/',
 			template_name='geneafamilycore/child/forms/remove_child.html'),
 				name='remove_child'),
 ]

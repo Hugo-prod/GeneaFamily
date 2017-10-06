@@ -1,0 +1,67 @@
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<h4 class="col card-title">Décès:</h4>
+			<div class="col-1 dropdown">
+				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{% if death %}
+					<a class="dropdown-item" href="{% url 'core:update_death' death.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_death' death.pk %}">Supprimer</a>
+					<a class="dropdown-item" href="{% url 'core:death_add_witness' death.pk %}">Ajouter un témoin</a>
+					<a class="dropdown-item" href="{% url 'core:death_add_comparer' death.pk %}">Ajouter un comparant</a>
+				{% else %}
+					<a class="dropdown-item" href="{% url 'core:create_death' member.pk %}">Créer</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+	{% if death %}
+		<div class="col">
+			<p><label>Date de décès: </label>{{ death.date }}</p>
+			<p><label>Heure: </label>{{ death.time }}</p>
+			{% if death.date_is_approximately %}
+				<p>La date et l'heure sont approximatif</p>
+			{% endif %}
+			<p><label>Raison:</label>{{ death.get_death_reason_display }}</p>
+		</div>
+		<div class="col">
+			{% if death.get_witnesses %}
+				<div class="col">
+					<h3>Témoins:</h3>
+					<ul>
+					{% for witness in death.get_witnesses %}
+						<li>
+							<a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a>
+							<a class="btn btn-sm btn-danger" href="{% url 'core:death_remove_witness' witness.pk %}">X</a>
+						</li>
+					{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+			{% if death.get_comparers %}
+				<div class="col">
+					<h3>Comparants:</h3>
+					<ul>
+					{% for comparer in death.get_comparers %}
+						<li>
+							<a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a>
+							<a class="btn btn-sm btn-danger" href="{% url 'core:death_remove_comparer' comparer.pk %}">X</a>
+						</li>
+					{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</div>
+	{% else %}
+		<div class="text-center">
+			<p> Le décès l'individu {{ object }} n'existe pas</p>
+			<a class="btn btn-primary" href="{% url 'core:create_death' member.pk %}">Créer le décès maintenant</a>
+		</div>
+	{% endif %}
+	</div>
+	<div class="card-footer">
+	</div>
+</div>

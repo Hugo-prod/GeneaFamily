@@ -5,7 +5,11 @@
 {% block content %}
 
 {% if not object_list %}
-<p>Aucun individu à afficher, pour créer un individu maintenant <a href="{% url 'core:create_member' %}">cliquez ici</a>.</p>
+	<p>Aucun individu à afficher, pour créer un individu maintenant <a href="{% url 'core:create_member' %}">cliquez ici</a>.</p>
+{% else %}
+	<div style="margin-bottom: 20px;">
+		<a class="btn btn-sm btn-primary" href="{% url 'core:create_member' %}">Créer un individu</a>
+	</div>
 {% endif %}
 
 <table class="table table-bordered">
@@ -15,6 +19,7 @@
 			<th>Prénom</th>
 			<th>Nom de famille</th>
 			<th>Genre</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,10 +29,14 @@
 			<td><a href="{% url 'core:member_detail' member.pk %}">{{ member.first_name }}</a></td>
 			<td>{{ member.family_name }}</td>
 			<td>{{ member.get_gender_display }}</td>
+			<td>
+				<a href="{% url 'core:delete_member' member.pk %}">Supprimer</a>
+			</td>
 		</tr>
 	{% empty %}
 		<tr>
 			<th scope="row">...</th>
+			<td>...</td>
 			<td>...</td>
 			<td>...</td>
 			<td>...</td>

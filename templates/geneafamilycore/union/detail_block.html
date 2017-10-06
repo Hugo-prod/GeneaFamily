@@ -1,0 +1,48 @@
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<h4 class="col card-title">Union:</h4>
+			<div class="col-1 dropdown">
+				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{% if union %}
+					<a class="dropdown-item" href="{% url 'core:update_union' union.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_union' union.pk %}">Supprimer</a>
+				{% else %}
+					<a class="dropdown-item" href="{% url 'core:create_union' family.pk %}">Créer</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+	{% if union %}
+		<div class="row">
+			<div class="col">
+				<p><label>Date du début de l'union: {% if union.start_date_is_approximately %}*{% endif %}</label> {{ union.start_date }}</p>
+				<p><label>Date de fin de l'union: {% if union.end_date_is_approximately %}*{% endif %}</label> {{ union.end_date }}</p>
+			</div>
+			<div class="col">
+				<div class="col">
+					<h4>Témoin</h4>
+					{% for witness in union.get_witnesses %}
+						<a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a>
+					{% endfor %}
+				</div>
+				<div class="col">
+					{% for comparer in union.get_comparers%}
+						<a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="text-center">
+			<p>L'union des individus n'existe pas</p>
+			<a class="btn btn-primary" href="{% url 'core:create_union' family.pk %}">Créer le Union maintenant</a>
+		</div>
+	{% endif %}
+	</div>
+	<div class="card-footer">
+	</div>
+</div>

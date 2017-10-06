@@ -9,6 +9,4 @@ class FamilyDetail(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(FamilyDetail, self).get_context_data(**kwargs)
-		context['children'] = Child.objects.filter(
-			family_fk=self.kwargs['pk'])
 		return context

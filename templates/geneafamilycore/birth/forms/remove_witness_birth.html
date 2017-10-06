@@ -1,0 +1,16 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Supprimer le témoin "{{ object.member_fk }}" de la naissance de "{{ member }}":{% endblock %}
+
+{% block form_title %}Supprimer le témoin "{{ object.member_fk }}" de la naissance de "{{ member }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		<p>Comfirmer la suppression du témoin "{{ object.member_fk }}" de la naissance de "{{ member }}"</p>
+		<a class="btn btn-warning" href="{% url 'core:member_detail' member.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Valider</button>
+	</form>
+{% endblock %}

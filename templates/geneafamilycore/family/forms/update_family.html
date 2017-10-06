@@ -1,16 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'generic/card_form.html' %}
 
 {% load bootstrap4 %}
 
-{% block subtitle %}Modifier la famille "{{ object.father_fk }}" {% endblock %}
+{% block subtitle %}Modifier la famille "{{ object.get_family_name }}":{% endblock %}
 
-{% block content %}
-<form action="" method="post" class="form">
-	{% csrf_token %}
-	{% bootstrap_form form %}
-	{% buttons %}
-		<a class="btn btn-warning" href="{% url 'core:home' %}">Annuler</a>
-		<button type="submit" class="btn btn-primary">Créer</button>
-	{% endbuttons %}
-</form>
+{% block form_title %}Modifier la famille "{{ object.get_family_name }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-warning" href="{% url 'core:family_detail' object.pk %}">Annuler</a>
+			<button type="submit" class="btn btn-primary">Créer</button>
+		{% endbuttons %}
+	</form>
 {% endblock %}

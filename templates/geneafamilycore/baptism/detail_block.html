@@ -1,0 +1,42 @@
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<h4 class="col card-title">Baptême:</h4>
+			<div class="col-1 dropdown">
+				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{% if baptism %}
+					<a class="dropdown-item" href="{% url 'core:update_baptism' baptism.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_baptism' baptism.pk %}">Supprimer</a>
+				{% else %}
+					<a class="dropdown-item" href="{% url 'core:create_baptism' member.pk %}">Créer</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+	{% if baptism %}
+		<div class="row">
+			<div class="col">
+				<p><label>Date du baptême: </label> {{ baptism.date }}</p>
+				<p><label>Heure: </label> {{ baptism.time }}</p>
+				{% if baptism.date_is_approximately %}
+					<p>La date et l'heure sont approximatif</p>
+				{% endif %}
+			</div>
+			<div class="col">
+				<p><label>Parrain: </label> {% if baptism.godfather_fk %}<a href="{% url 'core:member_detail' baptism.godfather_fk.pk %}">{{ baptism.godfather_fk }}</a>{% endif %}</p>
+				<p><label>Marraine: </label> {% if baptism.godmother_fk %}<a href="{% url 'core:member_detail' baptism.godmother_fk.pk %}">{{ baptism.godmother_fk }}</a>{% endif %}</p>
+			</div>
+		</div>
+	{% else %}
+		<div class="text-center">
+			<p>La baptême de l'individu {{ object }} n'existe pas</p>
+			<a class="btn btn-primary" href="{% url 'core:create_baptism' member.pk %}">Créer le baptême maintenant</a>
+		</div>
+	{% endif %}
+	</div>
+	<div class="card-footer">
+	</div>
+</div>

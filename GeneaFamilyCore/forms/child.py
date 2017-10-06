@@ -8,9 +8,12 @@ class ChildForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(ChildForm, self).__init__(*args, **kwargs)
-		# Todo: exclude all ancestror (father/father's father ...)
+		# TODO: exclude all ancestror 
+		member_to_exclude = [child.child_fk.pk for child in Child.objects.all()]
+		member_to_exclude.append(kwargs['initial']['mother_pk'])
+		member_to_exclude.append(kwargs['initial']['father_pk'])
 		self.fields['child_fk'].queryset = Member.objects.exclude(
-			id__in=[child.child_fk.pk for child in Child.objects.all()])
+			id__in=member_to_exclude)
 
 	class Meta:
 		model = Child

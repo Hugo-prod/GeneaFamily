@@ -5,8 +5,13 @@
 {% block content %}
 
 {% if not object_list %}
-<p>Aucune famille à afficher, pour en créer une maintenant <a href="{% url 'core:create_family' %}">cliquez ici</a>.</p>
+	<p>Aucune famille à afficher, pour en créer une maintenant <a href="{% url 'core:create_family' %}">cliquez ici</a>.</p>
+{% else %}
+	<div style="margin-bottom: 20px;">
+		<a class="btn btn-sm btn-primary" href="{% url 'core:create_family' %}">Créer une famille</a>
+	</div>
 {% endif %}
+
 
 <table class="table table-bordered">
 	<thead>
@@ -15,6 +20,7 @@
 			<th>Famille</th>
 			<th>Père</th>
 			<th>Mère</th>
+			<th>Nombre d'enfant</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,10 +30,12 @@
 			<td><a href="{% url 'core:family_detail' family.pk %}">{{ family.father_fk.family_name }}</a></td>
 			<td>{{ family.father_fk }}</td>
 			<td>{{ family.mother_fk }}</td>
+			<td>{{ family.get_nb_children }}</td>
 		</tr>
 	{% empty %}
 		<tr>
 			<th scope="row">...</th>
+			<td>...</td>
 			<td>...</td>
 			<td>...</td>
 			<td>...</td>

@@ -1,0 +1,16 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Supprimer le décès de "{{ member }}":{% endblock %}
+
+{% block form_title %}Supprimer le décès de "{{ member }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		<p>Confirmer la suppression du décès de "{{ member }}" ?</p>
+		<a class="btn btn-warning" href="{% url 'core:home' %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Supprimer</button>
+	</form>
+{% endblock %}

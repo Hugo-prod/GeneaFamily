@@ -1,11 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'generic/card_form.html' %}
 
-{% block subtitle %}Supprimer la famille "{{ object.father_fk }}" ?{% endblock %}
+{% load bootstrap4 %}
 
-{% block content %}
+{% block subtitle %}Supprimer la famille "{{ object.get_family_name }}":{% endblock %}
+
+{% block form_title %}Supprimer la famille "{{ object.get_family_name }}":{% endblock %}
+
+{% block form_body %}
 <form action="" method="post" class="form">
 	{% csrf_token %}
-	<p>Valider la suppression de cette famille ? </p>
+	<p>Valider la suppression de la famille "{{ object.get_family_name }}" ? </p>
 	<a class="btn btn-primary" href="{% url 'core:family_detail' object.pk %}">Annuler</a>
 	<button class="btn btn-danger" type="submit" style="cursor: pointer;">Supprimer</button>
 </form>

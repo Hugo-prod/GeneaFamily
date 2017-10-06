@@ -1,0 +1,18 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier le signalement de "{{ object.get_member }}":{% endblock %}
+
+{% block form_title %}Modifier le signalement de "{{ object.get_member }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-warning" href="{% url 'core:member_detail' object.get_member.pk %}">Annuler</a>
+			<button type="submit" class="btn btn-primary">Modifier</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

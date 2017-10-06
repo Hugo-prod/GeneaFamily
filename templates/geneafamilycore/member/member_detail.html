@@ -3,6 +3,61 @@
 {% block subtitle %}{{ object.first_name }} {{ object.family_name }}{% endblock %}
 
 {% block content %}
+<div class="col-12 ">
+	<ul class="nav nav-pills">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Identité</a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="{% url 'core:update_member' object.pk %}">Modifier</a>
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Naissance</a>
+			<div class="dropdown-menu">
+			{% if object.birth_fk %}
+				<a class="dropdown-item" href="{% url 'core:update_birth' object.birth_fk.pk %}">Modifier</a>
+				<a class="dropdown-item" href="{% url 'core:delete_birth' object.birth_fk.pk %}">Supprimer</a>
+			{% else %}
+				<a class="dropdown-item" href="{% url 'core:create_birth' object.pk %}">Créer</a>
+			{% endif %}
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Décès</a>
+			<div class="dropdown-menu">
+			{% if object.death_fk %}
+				<a class="dropdown-item" href="{% url 'core:update_death' object.death_fk.pk %}">Modifier</a>
+				<a class="dropdown-item" href="{% url 'core:delete_death' object.death_fk.pk %}">Supprimer</a>
+			{% else %}
+				<a class="dropdown-item" href="{% url 'core:create_death' object.pk %}">Créer</a>
+			{% endif %}
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Baptême</a>
+			<div class="dropdown-menu">
+			{% if object.baptism_fk %}
+				<a class="dropdown-item" href="{% url 'core:update_baptism' object.baptism_fk.pk %}">Modifier</a>
+				<a class="dropdown-item" href="{% url 'core:delete_baptism' object.baptism_fk.pk %}">Supprimer</a>
+			{% else %}
+				<a class="dropdown-item" href="{% url 'core:create_baptism' object.pk %}">Créer</a>
+			{% endif %}
+			</div>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Fiche militaire</a>
+			<div class="dropdown-menu">
+			{% if object.military_fk %}
+				<a class="dropdown-item" href="{% url 'core:update_military' object.military_fk.pk %}">Modifier</a>
+				<a class="dropdown-item" href="{% url 'core:delete_military' object.military_fk.pk %}">Supprimer</a>
+			{% else %}
+				<a class="dropdown-item" href="{% url 'core:create_military' object.pk %}">Créer</a>
+			{% endif %}
+			</div>
+		</li>
+	</ul>
+</div>
+
 <div class="col-12">
 	<div class="card">
 		<div class="card-header">
@@ -27,6 +82,23 @@
 	</div>
 </div>
 
+<div class="col-12">
+	{% include 'geneafamilycore/birth/detail_block.html' with birth=object.birth_fk member=object %}
+</div>
+
+<div class="col-12">
+	{% include 'geneafamilycore/death/detail_block.html' with death=object.death_fk member=object %}
+</div>
+
+<div class="col-12">
+	{% include 'geneafamilycore/baptism/detail_block.html' with baptism=object.baptism_fk member=object %}
+</div>
+
+<div class="col-12">
+	{% include 'geneafamilycore/military/detail_block.html' with military=object.military_fk member=object %}
+</div>
+
+{% comment %}
 <div class="col-12">
 	<div class="card">
 		<div class="card-header">
@@ -83,4 +155,5 @@
 		</div>
 	</div>
 </div>
+{% endcomment %}
 {% endblock %}

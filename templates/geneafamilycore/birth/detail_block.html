@@ -1,0 +1,70 @@
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<h4 class="col card-title">Naissance:</h4>
+			<div class="col-1 dropdown">
+				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				{% if birth %}
+					<a class="dropdown-item" href="{% url 'core:update_birth' birth.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_birth' birth.pk %}">Supprimer</a>
+					<a class="dropdown-item" href="{% url 'core:birth_add_witness' birth.pk %}">Ajouter un témoin</a>
+					<a class="dropdown-item" href="{% url 'core:birth_add_comparer' birth.pk %}">Ajouter un comparant</a>
+				{% else %}
+					<a class="dropdown-item" href="{% url 'core:create_birth' member.pk %}">Créer</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+	{% if birth %}
+		<div class="row">
+			<div class="col">
+				<p><label>Date de naissance: </label>{{ birth.date }}</p>
+				<p><label>Heure: </label>{{ birth.time }}</p>
+				{% if birth.date_is_approximately %}
+					<p>La date et l'heure sont approximatif</p>
+				{% endif %}
+			</div>
+			<div class="col">
+				<div class="row">
+					{% if birth.get_witnesses %}
+						<div class="col">
+							<h5>Témoins:</h5>
+							<ul>
+							{% for witness in birth.get_witnesses %}
+								<li>
+									<a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a>
+									<a class="btn btn-sm btn-danger" href="{% url 'core:birth_remove_witness' witness.pk %}">X</a>
+								</li>
+							{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+					{% if birth.get_comparers %}
+						<div class="col">
+							<h5>Comparants:</h5>
+							<ul>
+							{% for comparer in birth.get_comparers %}
+								<li>
+									<a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a>
+									<a class="btn btn-sm btn-danger" href="{% url 'core:birth_remove_comparer' comparer.pk %}">X</a>
+								</li>
+							{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="text-center">
+			<p>La naissance de l'individu {{ object }} n'existe pas</p>
+			<a class="btn btn-primary" href="{% url 'core:create_birth' member.pk %}">Créer la naissance maintenant</a>
+		</div>
+	{% endif %}
+	</div>
+	<div class="card-footer">
+	</div>
+</div>

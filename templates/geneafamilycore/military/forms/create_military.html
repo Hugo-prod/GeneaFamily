@@ -1,0 +1,14 @@
+{% extends 'generic/card_form.html' %}
+
+{% block subtitle %}Créer une fiche militaire pour "{{ member }}":{% endblock %}
+
+{% block form_title %}Créer une fiche militaire pour "{{ member }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		<p>Voulez vous créer une fiche militaire pour "{{ member }}" ?</p>
+		<a class="btn btn-warning" href="{% url 'core:member_detail' member.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Créer</button>
+	</form>
+{% endblock %}
