@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les baptêmes:{% endblock %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Prénom</th>
+			<th>Nom de famille</th>
+			<th>Genre</th>
+			<th>Parrain</th>
+			<th>Marraine</th>
+			<th>Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for baptism in object_list %}
+		<tr>
+			<th scope="row">{{ baptism.pk }}</th>
+			<td><a href="{% url 'core:baptism_detail' baptism.pk %}">{{ baptism.get_member.first_name }}</a></td>
+			<td>{{ baptism.get_member.family_name }}</td>
+			<td>{{ baptism.get_member.get_gender_display }}</td>
+			<td><a href="{% url 'core:member_detail' baptism.godfather_fk.pk %}">{{ baptism.godfather_fk }}</a></td>
+			<td><a href="{% url 'core:member_detail' baptism.godmother_fk.pk %}">{{ baptism.godmother_fk }}</a></td>
+			<td>{{ baptism.date }} {% if baptism.date_is_approximately %}*{% endif %}</td>
+			<td>
+				<a href="{% url 'core:baptism_detail' baptism.pk %}">Voir</a>
+				<a href="{% url 'core:delete_baptism' baptism.pk %}">Supprimer</a>
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Detail de la naissance de "{{ object.get_member }}"{% endblock %}
+
+{% block content %}
+    {% include 'geneafamilycore/birth/detail_block.html' %}
+{% endblock %}

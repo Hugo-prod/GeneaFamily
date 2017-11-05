@@ -1,0 +1,52 @@
+<div style="padding: 15px;">
+    <div id="jobs" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-industry"></i> Métier:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'core:create_job' member.pk %}">Ajouter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Profession</th>
+                          <th scope="col">Date</th>
+                          <!-- <th scope="col">Lieu</th> -->
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{% for job in object_list %}
+            							<tr>
+            								<th scope="row">{{ job.pk }}</th>
+            								<td>{{ job.job_name }}</td>
+                            <td>{{ job.date }}</td>
+            								<td>
+            									<a class="btn btn-sm btn-primary" href="{% url 'core:job_detail' job.pk %}">Voir</a>
+            									<a class="btn btn-sm btn-warning" href="{% url 'core:update_job' job.pk %}">Modifier</a>
+            									<a class="btn btn-sm btn-danger" href="{% url 'core:delete_job' job.pk %}">Supprimer</a>
+            								</td>
+            							</tr>
+						            {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

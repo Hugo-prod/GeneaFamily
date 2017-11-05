@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les décès:{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Prénom</th>
+			<th>Nom de famille</th>
+			<th>Genre</th>
+			<th>Type</th>
+			<th>Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for death in object_list %}
+		<tr>
+			<th scope="row">{{ death.pk }}</th>
+			<td><a href="{% url 'core:death_detail' death.pk %}">{{ death.get_member.first_name }}</a></td>
+			<td>{{ death.get_member.family_name }}</td>
+			<td>{{ death.get_member.get_gender_display }}</td>
+			<td>{{ death.get_death_reason_display }}</td>
+			<td>{{ death.date }} {% if death.date_is_approximately %}*{% endif %}</td>
+			<td>
+				<a href="{% url 'core:death_detail' death.pk %}">Voir</a>
+				<a href="{% url 'core:delete_death' death.pk %}">Supprimer</a>
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

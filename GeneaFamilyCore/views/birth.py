@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DeleteView
 
@@ -6,6 +6,16 @@ from GeneaFamilyCore.models import Birth, Member
 
 
 class CreateBirth(CreateView):
+
+	def dispatch(self, request, *args, **kwargs):
+		""" If object is already exist, then redirect to update this"""
+		if Member.objects.get(pk=self.kwargs['member_pk']).birth_fk:
+			return redirect(
+				reverse('core:update_birth',
+						args=[Member.objects.get(
+							pk=self.kwargs['member_pk']).birth_fk.pk]))
+		else:
+			return super(CreateBirth, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		birth_obj = form.save()
@@ -24,11 +34,6 @@ class CreateBirth(CreateView):
 
 
 class DeleteBirth(DeleteView):
-
-	def get_context_data(self, **kwargs):
-		context = super(DeleteBirth, self).get_context_data(**kwargs)
-		context['member'] = Member.objects.get(pk=self.object.get_member().pk)
-		return context
 
 	def get_success_url(self):
 		return reverse('core:member_detail', args=[self.object.get_member().pk])
@@ -99,7 +104,7 @@ class BirthAddComparer(CreateView):
 class BirthDeleteComparer(DeleteView):
 
 	def get_context_data(self, **kwargs):
-		context = super(BirthDeleteWitness, self).get_context_data(**kwargs)
+		context = super(BirthDeleteComparer, self).get_context_data(**kwargs)
 		context['member'] = Member.objects.get(
 			birth_fk=self.object.birth_fk)
 		return context

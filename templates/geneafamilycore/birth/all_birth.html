@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de toutes les naissances:{% endblock %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Prénom</th>
+			<th>Nom de famille</th>
+			<th>Genre</th>
+			<th>Type</th>
+			<th>Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for birth in object_list %}
+		<tr>
+			<th scope="row">{{ birth.pk }}</th>
+			<td><a href="{% url 'core:birth_detail' birth.pk %}">{{ birth.get_member.first_name }}</a></td>
+			<td>{{ birth.get_member.family_name }}</td>
+			<td>{{ birth.get_member.get_gender_display }}</td>
+			<td>{{ birth.get_birth_type_display }}</td>
+			<td>{{ birth.date }} {% if birth.date_is_approximately %}*{% endif %}</td>
+			<td>
+				<a href="{% url 'core:birth_detail' birth.pk %}">Voir</a>
+				<a href="{% url 'core:delete_birth' birth.pk %}">Supprimer</a>
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

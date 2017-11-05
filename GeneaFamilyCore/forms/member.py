@@ -19,4 +19,13 @@ class MemberForm(ModelForm):
 		model = Member
 		fields = [	'first_name',
 					'family_name',
+					'pseudonyme',
 					'gender']
+
+
+class MemberInstructionForm(ModelForm):
+
+	class Meta:
+		model = Member
+		fields = [	'read',
+					'write',]

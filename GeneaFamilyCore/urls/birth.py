@@ -3,10 +3,7 @@ from django.views.generic import UpdateView, DetailView, ListView
 
 from GeneaFamilyCore.models import Birth, BirthWitness, BirthComparer
 from GeneaFamilyCore.forms.birth import BirthForm, BirthWitnessForm, BirthComparerForm
-from GeneaFamilyCore.views.birth import (
-	CreateBirth, DeleteBirth,
-	BirthAddWitness, BirthDeleteWitness,
-	BirthAddComparer, BirthDeleteComparer)
+from GeneaFamilyCore.views.birth import *
 
 birth_urlpatterns = [
 
@@ -40,7 +37,7 @@ birth_urlpatterns = [
 	url(r'^birth/(?P<pk>\d+)$',
 		DetailView.as_view(
 			model=Birth,
-			template_name='geneafamilycore/birth/member_birth_detail.html'),
+			template_name='geneafamilycore/birth/birth_detail.html'),
 				name='birth_detail'),
 
 	# All Births
@@ -48,8 +45,8 @@ birth_urlpatterns = [
 		ListView.as_view(
 			model=Birth,
 			paginate_by=20,
-			template_name='geneafamilycore/birth/all_member_births.html'),
-				name='all_member_births'),
+			template_name='geneafamilycore/birth/all_birth.html'),
+				name='all_birth'),
 
 	#############
 	## WITNESS ##

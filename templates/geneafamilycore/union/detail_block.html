@@ -1,48 +1,97 @@
-<div class="card">
-	<div class="card-header">
-		<div class="row">
-			<h4 class="col card-title">Union:</h4>
-			<div class="col-1 dropdown">
-				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				{% if union %}
-					<a class="dropdown-item" href="{% url 'core:update_union' union.pk %}">Modifier</a>
-					<a class="dropdown-item" href="{% url 'core:delete_union' union.pk %}">Supprimer</a>
-				{% else %}
-					<a class="dropdown-item" href="{% url 'core:create_union' family.pk %}">Créer</a>
-				{% endif %}
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="card-body">
-	{% if union %}
-		<div class="row">
-			<div class="col">
-				<p><label>Date du début de l'union: {% if union.start_date_is_approximately %}*{% endif %}</label> {{ union.start_date }}</p>
-				<p><label>Date de fin de l'union: {% if union.end_date_is_approximately %}*{% endif %}</label> {{ union.end_date }}</p>
-			</div>
-			<div class="col">
-				<div class="col">
-					<h4>Témoin</h4>
-					{% for witness in union.get_witnesses %}
-						<a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a>
-					{% endfor %}
-				</div>
-				<div class="col">
-					{% for comparer in union.get_comparers%}
-						<a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a>
-					{% endfor %}
-				</div>
-			</div>
-		</div>
-	{% else %}
-		<div class="text-center">
-			<p>L'union des individus n'existe pas</p>
-			<a class="btn btn-primary" href="{% url 'core:create_union' family.pk %}">Créer le Union maintenant</a>
-		</div>
-	{% endif %}
-	</div>
-	<div class="card-footer">
-	</div>
+<div style="padding: 15px;">
+    <div id="unions" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-venus-mars"></i> Unions:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="{% url 'core:update_union' object.pk %}">Modifier</a>
+							<a class="dropdown-item" href="{% url 'core:delete_union' object.pk %}">Supprimer</a>
+							<a class="dropdown-item" href="{% url 'core:union_add_witness' object.pk %}">Ajouter un témoin</a>
+							<a class="dropdown-item" href="{% url 'core:union_add_comparer' object.pk %}">Ajouter un comparant</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Père:</h4>
+                    {% if object.get_family.father_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' object.get_family.father_fk.pk %}">{{ object.get_family.father_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ object.get_family.father_fk.first_name }}</p>
+                        <p><strong>Surnom: </strong>[TODO]</p>
+                        <p><strong>Nom: </strong>{{ object.get_family.father_fk.family_name }}</p>
+                        <p><strong>Genre: </strong>{{ object.get_family.father_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <h4>Mère:</h4>
+                    {% if object.get_family.mother_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' object.get_family.mother_fk.pk %}">{{ object.get_family.mother_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ object.get_family.mother_fk.first_name }}</p>
+                        <p><strong>Surnom: </strong>[TODO]</p>
+                        <p><strong>Nom: </strong>{{ object.get_family.mother_fk.family_name }}</p>
+                        <p><strong>Genre: </strong>{{ object.get_family.mother_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <h4>Union:</h4>
+                    <p><strong>Type d'union: </strong>{{ object.get_union_type_display }}</p>
+                    <p><strong>Date de l'union: </strong>{{ object.get_start_date_display }}</p>
+                    <div class="row">
+                        {% if object.get_comparers %}
+                            <div class="col">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="col">Comparants</th>
+                                            <th class="col-1">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for comparer in object.get_comparers %}
+                                        <td><a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a></td>
+                                        <td><a class="btn btn-sm btn-danger" href="{% url 'core:union_remove_comparer' comparer.pk %}"><i class="fa fa-close"></i></a></td>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                        {% if object.get_witnesses %}
+                            <div class="col">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="col">Témoins</th>
+                                            <th class="col-1">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for witness in object.get_witnesses %}
+                                        <td><a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a></td>
+                                        <td><a class="btn btn-sm btn-danger" href="{% url 'core:union_remove_witness' witness.pk %}"><i class="fa fa-close"></i></a></td>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

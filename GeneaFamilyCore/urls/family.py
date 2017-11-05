@@ -17,6 +17,13 @@ family_urlpatterns = [
 			template_name='geneafamilycore/family/forms/create_family.html'),
 				name='create_family'),
 
+	# create a family with a preselected member
+	url(r'^family/(?P<preselected_member_pk>\d+)/create$',
+		CreateFamilyWithMember.as_view(
+			form_class=FamilyForm,
+			template_name='geneafamilycore/family/forms/create_family.html'),
+				name='create_family_with_member'),
+
 	# Update a family
 	url(r'^family/(?P<pk>\d+)/update$',
 		UpdateView.as_view(

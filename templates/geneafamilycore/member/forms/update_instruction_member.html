@@ -1,0 +1,18 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier l'instruction de l'individu : "{{ object.first_name }} - {{ object.family_name }}":{% endblock %}
+
+{% block form_title %}Modifier l'instruction de l'individu : "{{ object.first_name }} - {{ object.family_name }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-warning" href="{% url 'core:member_detail' object.pk %}">Annuler</a>
+			<button type="submit" class="btn btn-primary">Enregistrer</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

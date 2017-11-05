@@ -2,116 +2,161 @@
 
 {% block subtitle %}Accueil{% endblock %}
 {% block content %}
+<div class="row">
 
-<div class="col-4">
-	<div class="card text-white bg-primary">
-		<div class="card-header">Individu</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="{% url 'core:create_member' %}">Créer un individu</a>
-				<a class="list-group-item list-group-item-action" href="{% url 'core:all_members' %}">Tous les individus</a>
+	<div class="col-4">
+		<div class="card text-white bg-primary">
+			<div class="card-header">Individu</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="{% url 'core:create_member' %}">Créer un individu</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_members' %}">Tous les individus</a>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="col-4">
+		<div class="card text-white bg-info">
+			<div class="card-header">Famille</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="{% url 'core:create_family' %}">Créer une famille</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_families' %}">Toutes les familles</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-4">
+		<div class="card text-white bg-danger">
+			<div class="card-header">Union</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer une union</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_union' %}">Toutes les unions</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
-<div class="col-4">
-	<div class="card text-white bg-info">
-		<div class="card-header">Famille</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="{% url 'core:create_family' %}">Créer une famille</a>
-				<a class="list-group-item list-group-item-action" href="{% url 'core:all_families' %}">Toutes les familles</a>
-			</div>
-		</div>
-	</div>
+<div class="row">
+	<div class="col-12" style="height: 20px;"></div>
 </div>
 
-<div class="col-4">
-	<div class="card text-white bg-danger">
-		<div class="card-header">Union</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="#">Créer une union</a>
-				<a class="list-group-item list-group-item-action" href="#">Toutes les unions</a>
+<div class="row">
+	<div class="col-4">
+		<div class="card text-white bg-success">
+			<div class="card-header">Naissance</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer une naissance</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_birth' %}">Toutes les naissance</a>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="col-4">
+		<div class="card text-white bg-dark">
+			<div class="card-header">Décès</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer un décès</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_death' %}">Tous les décès</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-4">
+		<div class="card text-white bg-warning">
+			<div class="card-header">Baptême</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer un baptême</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_baptism' %}">Tous les baptêmes</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
-<div class="col-12" style="height: 20px;"></div>
-
-<div class="col-4">
-	<div class="card text-white bg-success">
-		<div class="card-header">Naissance</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="#">Créer une naissance</a>
-				<a class="list-group-item list-group-item-action" href="#">Toutes les naissance</a>
-			</div>
-		</div>
-	</div>
+<div class="row">
+	<div class="col-12" style="height: 20px;"></div>
 </div>
 
-<div class="col-4">
-	<div class="card text-white bg-dark">
-		<div class="card-header">Décès</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="#">Créer un décès</a>
-				<a class="list-group-item list-group-item-action" href="#">Tous les décès</a>
+<div class="row">
+	
+	<div class="col-4">
+		<div class="card text-white bg-dark">
+			<div class="card-header">Metier</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer un métier</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_jobs' %}">Toutes les métiers</a>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="col-4">
+		<div class="card text-white bg-success">
+			<div class="card-header">Militaire</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="#">Créer une fiche militaire</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_military' %}">Toutes les fiches militaires</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-4">
+		<div class="card text-white bg-info">
+			<div class="card-header">Lieu</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="{% url 'core:create_locality' %}">Créer un lieu</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_locations' %}">Tous les lieux</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
-<div class="col-4">
-	<div class="card text-white bg-warning">
-		<div class="card-header">Baptême</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="#">Créer un baptême</a>
-				<a class="list-group-item list-group-item-action" href="#">Tous les baptêmes</a>
-			</div>
-		</div>
-	</div>
+<div class="row">
+	<div class="col-12" style="height: 20px;"></div>
 </div>
 
-<div class="col-12" style="height: 20px;"></div>
-
-<div class="col-4">
-	<div class="card text-white bg-secondary">
-		<div class="card-header">Évenement</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="{% url 'core:all_member_events' %}">Tous les évènements</a>
-				<a class="list-group-item list-group-item-action" href="#">Créer un évènement</a>
+<div class="row">
+	<div class="col-4">
+		<div class="card text-white bg-secondary">
+			<div class="card-header">Évenement</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_member_events' %}">Tous les évènements</a>
+					<a class="list-group-item list-group-item-action" href="#">Créer un évènement</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="col-4">
-	<div class="card text-white bg-info">
-		<div class="card-header">Type évenement</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="{% url 'core:create_event_type' %}">Créer un type d'évènement</a>
-				<a class="list-group-item list-group-item-action" href="{% url 'core:all_event_types' %}">Tous les types d'évènement</a>
+	<div class="col-4">
+		<div class="card text-white bg-info">
+			<div class="card-header">Type évenement</div>
+			<div class="card-body">
+				<div class="list-group">
+					<a class="list-group-item list-group-item-action" href="{% url 'core:create_event_type' %}">Créer un type d'évènement</a>
+					<a class="list-group-item list-group-item-action" href="{% url 'core:all_event_types' %}">Tous les types d'évènement</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="col-4">
-	<div class="card text-white bg-info">
-		<div class="card-header">Lieu</div>
-		<div class="card-body">
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action" href="{% url 'core:create_locality' %}">Créer un lieu</a>
-				<a class="list-group-item list-group-item-action" href="{% url 'core:all_locations' %}">Tous les lieux</a>
-			</div>
-		</div>
-	</div>
 </div>
 {% endblock %}

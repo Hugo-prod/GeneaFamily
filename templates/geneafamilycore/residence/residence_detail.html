@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Detail du lieu{% endblock %}
+
+{% block content %}
+<div>
+	<h4>Lieu:</h4>
+	<p><label>Pays: </label>{{ object.country }}</p>
+	<p><label>Ville: </label>{{ object.city }}</p>
+	<p><label>Complément d'adresse: </label>{{ object.additional_address_information }}</p>
+	<p><label>Latitude: </label>{% if object.latitude %}{{ object.latitude }}{% endif %}</p>
+	<p><label>Longitude: </label>{% if object.longitude %}{{ object.longitude }}{% endif %}</p>
+	<a class="btn btn-warning" href="{% url 'core:update_locality' object.pk %}">Modifier</a>
+	<a class="btn btn-danger" href="{% url 'core:delete_locality' object.pk %}">Supprimer</a>
+</div>
+{% endblock %}

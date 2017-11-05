@@ -1,0 +1,93 @@
+<div style="padding: 15px;">
+    <div id="family" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-group"></i> Famille:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'core:update_family' parents.pk %}">Modifier</a>
+                            <a class="dropdown-item" href="{% url 'core:delete_family' parents.pk %}">Supprimer</a>
+                            <a class="dropdown-item" href="{% url 'core:add_child' parents.pk %}">Ajouter un enfant</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Père:</h4>
+                    {% if parents.father_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' parents.father_fk.pk %}">{{ parents.father_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ parents.father_fk.first_name }}</p>
+                        <p><strong>Surnom: </strong>[TODO]</p>
+                        <p><strong>Nom: </strong>{{ parents.father_fk.family_name }}</p>
+                        <p><strong>Genre: </strong>{{ parents.father_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <h4>Mère:</h4>
+                    {% if parents.mother_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' parents.mother_fk.pk %}">{{ parents.mother_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ parents.mother_fk.first_name }}</p>
+                        <p><strong>Surnom: </strong>[TODO]</p>
+                        <p><strong>Nom: </strong>{{ parents.mother_fk.family_name }}</p>
+                        <p><strong>Genre: </strong>{{ parents.mother_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <h4>Union:</h4>
+                    <p class="blockquote-footer">Type d'union:</p>
+                </div>
+                <div class="col">
+                    <p><strong>Type d'union: </strong>{{ parents.union_fk.get_union_type_display }}</p>
+                    <p><strong>Date de début de l'union: </strong>{{ parents.union_fk.get_start_date_display }}</p>
+                    <p><strong>Date de fin de l'union: </strong>{{ parents.union_fk.get_start_date_display }}</p>
+                </div>
+                <div class="col">
+                    <h5>Comparants</h5>
+                    <ul>
+                        {% for comparant in parents.union_fk.get_comparers %}
+                            <li><a href="{% url 'core:member_detail' comparant.pk %}">{{ comparant.member_fk }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col">
+                    <h5>Témoins</h5>
+                    <ul>
+                        {% for witness in parents.union_fk.get_witnesses %}
+                            <li><a href="{% url 'core:member_detail' witness.pk %}">{{ witness.member_fk }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <h5>Enfants:</h5>
+                    <p class="blockquote-footer">Enfants de "{{ object }}":</p>
+                    <ul>
+                        {% for child in parents.get_children %}
+                            <li><a href="{% url 'core:member_detail' child.child_fk.pk %}">{{ child.child_fk }}</a> - <a href="{% url 'core:remove_child' child.pk %}">X</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

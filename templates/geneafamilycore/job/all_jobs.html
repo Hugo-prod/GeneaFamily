@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les metiers:{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Membre</th>
+			<th>Metier</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for job in object_list %}
+		<tr>
+			<th scope="row">{{ job.pk }}</th>
+			<td><a href="{% url 'core:member_detail' job.member_fk.pk %}">{{ job.member_fk }}</a></td>
+			<td><a href="{% url 'core:job_detail' job.pk %}">{{ job.job_name }}</a></td>
+			<td>{{ job.date }}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

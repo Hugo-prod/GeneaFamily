@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{% load static %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
-	<title>{% block title %}GeneaFamily{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}?{% now 'U' %}">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-	<a class="navbar-brand" href="/">GeneaFamily</a>
-	<div class="collapse navbar-collapse" id="navbar">
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item active">
-				<a class="nav-link" href="/">Accueil</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{% url 'core:all_members' %}">Individu</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="{% url 'core:all_families' %}">Famille</a>
-			</li>
-		</ul>
+<div class="container-fluid">
+	<div class="row d-flex d-md-block flex-nowrap wrapper">
+		<div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show " id="sidebar">
+			<div class="list-group border-0 card text-center text-md-left">
+				<a href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-home"></i> <span class="d-none d-md-inline">GeneaFamily</span> </a>
+				<div class="collapse" id="menu1">
+					<a href="/" class="list-group-item" data-parent="#menu1"><i class="fa fa-home"></i> Accueil</a>
+					<a href="#menu1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-vcard-o"></i> Membre</a>
+					<div class="collapse" id="menu1sub1">
+						<a href="{% url 'core:create_member' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-pencil"></i> Créer un membre</a>
+						<a href="{% url 'core:all_members' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-group"></i>Tous les membres</a>
+					</div>
+						<a href="#menu1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-group"></i> <span class="d-none d-md-inline">Famille</span></a>
+					<div class="collapse" id="menu1sub2">
+						<a href="{% url 'core:create_family' %}" class="list-group-item" data-parent="#menu3"><i class="fa fa-pencil"></i> Créer une famille</a>
+						<a href="{% url 'core:all_families' %}" class="list-group-item" data-parent="#menu3"><i class="fa fa-group"></i>Toutes les familles</a>
+					</div>
+				</div>
+				{% block extras_nav %}{% endblock %}
+			</div>
+		</div>
+		<main class="col-md-10 float-right px-5 pt-2 main">
+			<div class="col-12 page-header"><h1>{% block subtitle %}{% endblock %}</h1></div>
+				<div style="padding: 15px;">{% block content %}{% endblock %}</div>
+		</main>
 	</div>
-</nav>
-
-<div class="col-12" style="height: 20px;"></div>
-
-<div class="container">
-	<div class="row"><h1>{% block subtitle %}{% endblock %}</h1></div>
-	<div class="row">{% block content %}{% endblock %}</div>
 </div>
+
 <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>

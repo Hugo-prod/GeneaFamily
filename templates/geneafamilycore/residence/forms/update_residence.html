@@ -1,0 +1,18 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Modifier la résidence de "{{ object.member_fk }}":{% endblock %}
+
+{% block form_title %}Modifier la résidence de "{{ object.member_fk }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-warning" href="{% url 'core:member_detail' object.member_fk.pk %}">Annuler</a>
+			<button type="submit" class="btn btn-primary">Créer</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

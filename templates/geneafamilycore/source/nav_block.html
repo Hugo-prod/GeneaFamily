@@ -1,0 +1,5 @@
+<a href="#source_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-archive"></i> <span class="d-none d-md-inline">Source</span></a>
+<div class="collapse" id="source_menu">
+    <a href="#source" class="list-group-item" data-parent="#source_menu"><i class="fa fa-eye"></i> Voir</a>
+    <a href="{% url 'core:create_source' object.pk %}" class="list-group-item" data-parent="#source_menu"><i class="fa fa-pencil"></i> Créer</a>
+</div>

@@ -2,158 +2,95 @@
 
 {% block subtitle %}{{ object.first_name }} {{ object.family_name }}{% endblock %}
 
+{% block extras_nav %}
+	<hr>
+	{% include 'geneafamilycore/family/nav_block.html' %}
+	{% include 'geneafamilycore/birth/nav_block.html' %}
+	{% include 'geneafamilycore/death/nav_block.html' %}
+	{% include 'geneafamilycore/baptism/nav_block.html' %}
+	{% include 'geneafamilycore/job/nav_block.html' %}
+	{% include 'geneafamilycore/residence/nav_block.html' %}
+	{% include 'geneafamilycore/military/nav_block.html' %}
+	{% include 'geneafamilycore/source/nav_block.html' %}
+{% endblock %}
+
 {% block content %}
-<div class="col-12 ">
-	<ul class="nav nav-pills">
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Identité</a>
-			<div class="dropdown-menu">
-				<a class="dropdown-item" href="{% url 'core:update_member' object.pk %}">Modifier</a>
-			</div>
+
+<div class="col-12">
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="descriptif-tab" data-toggle="tab" href="#descriptif" role="tab" aria-controls="descriptif" aria-selected="true">Vue descriptive</a>
 		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Naissance</a>
-			<div class="dropdown-menu">
-			{% if object.birth_fk %}
-				<a class="dropdown-item" href="{% url 'core:update_birth' object.birth_fk.pk %}">Modifier</a>
-				<a class="dropdown-item" href="{% url 'core:delete_birth' object.birth_fk.pk %}">Supprimer</a>
-			{% else %}
-				<a class="dropdown-item" href="{% url 'core:create_birth' object.pk %}">Créer</a>
-			{% endif %}
-			</div>
+		<li class="nav-item">
+			<a class="nav-link" id="narrativ-tab" data-toggle="tab" href="#narrativ" role="tab" aria-controls="narrativ" aria-selected="false">Vue narrative</a>
 		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Décès</a>
-			<div class="dropdown-menu">
-			{% if object.death_fk %}
-				<a class="dropdown-item" href="{% url 'core:update_death' object.death_fk.pk %}">Modifier</a>
-				<a class="dropdown-item" href="{% url 'core:delete_death' object.death_fk.pk %}">Supprimer</a>
-			{% else %}
-				<a class="dropdown-item" href="{% url 'core:create_death' object.pk %}">Créer</a>
-			{% endif %}
-			</div>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Baptême</a>
-			<div class="dropdown-menu">
-			{% if object.baptism_fk %}
-				<a class="dropdown-item" href="{% url 'core:update_baptism' object.baptism_fk.pk %}">Modifier</a>
-				<a class="dropdown-item" href="{% url 'core:delete_baptism' object.baptism_fk.pk %}">Supprimer</a>
-			{% else %}
-				<a class="dropdown-item" href="{% url 'core:create_baptism' object.pk %}">Créer</a>
-			{% endif %}
-			</div>
-		</li>
-		<li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Fiche militaire</a>
-			<div class="dropdown-menu">
-			{% if object.military_fk %}
-				<a class="dropdown-item" href="{% url 'core:update_military' object.military_fk.pk %}">Modifier</a>
-				<a class="dropdown-item" href="{% url 'core:delete_military' object.military_fk.pk %}">Supprimer</a>
-			{% else %}
-				<a class="dropdown-item" href="{% url 'core:create_military' object.pk %}">Créer</a>
-			{% endif %}
-			</div>
+		<li class="nav-item">
+			<a class="nav-link" id="tree-tab" data-toggle="tab" href="#tree" role="tab" aria-controls="tree" aria-selected="false">Vue diagramme Arbre</a>
 		</li>
 	</ul>
 </div>
 
-<div class="col-12">
-	<div class="card">
-		<div class="card-header">
-			<div class="row">
-				<h4 class="col card-title">Identité:</h4>
-				<div class="col-1 dropdown">
-					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="{% url 'core:update_member' object.pk %}">Modifier</a>
-						<a class="dropdown-item" href="{% url 'core:delete_member' object.pk %}">Supprimer</a>
-					</div>
-				</div>
-			</div>
+<div class="tab-content" id="myTabContent">
+	<div class="tab-pane fade show active" id="descriptif" role="tabpanel" aria-labelledby="descriptif-tab">
+		<div class="col-12">
+			{% include 'geneafamilycore/member/detail_block.html' with member=object %}
 		</div>
-		<div class="card-body">
-			<p><label>Prénom: </label>{{ object.first_name }}</p>
-			<p><label>Nom: </label>{{ object.family_name }}</p>
-			<p><label>Genre: </label>{{ object.get_gender_display }}</p>
+
+		<div class="col-12">
+			{% if object.get_parents %}
+				{% include 'geneafamilycore/family/detail_block_parents.html' with parents=object.get_parents member=object %}
+			{% endif %}
 		</div>
-		<div class="card-footer">
+
+		<div class="col-12">
+			{% if object.get_families %}
+				{% include 'geneafamilycore/family/detail_block_families.html' with families=object.get_families member=object %}
+			{% endif %}
 		</div>
-	</div>
-</div>
 
-<div class="col-12">
-	{% include 'geneafamilycore/birth/detail_block.html' with birth=object.birth_fk member=object %}
-</div>
-
-<div class="col-12">
-	{% include 'geneafamilycore/death/detail_block.html' with death=object.death_fk member=object %}
-</div>
-
-<div class="col-12">
-	{% include 'geneafamilycore/baptism/detail_block.html' with baptism=object.baptism_fk member=object %}
-</div>
-
-<div class="col-12">
-	{% include 'geneafamilycore/military/detail_block.html' with military=object.military_fk member=object %}
-</div>
-
-{% comment %}
-<div class="col-12">
-	<div class="card">
-		<div class="card-header">
-			<div class="row">
-				<h4 class="col card-title">Évènement:</h4>
-				<div class="col-1 dropdown">
-					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Créer</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						{% for event_type in all_event_types %}
-							<a class="dropdown-item" href="{% url 'core:create_event' object.pk event_type.pk %}">{{ event_type.name }}</a>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
+		<div class="col-12">
+			{% if object.birth_fk %}
+				{% include 'geneafamilycore/birth/detail_block.html' with object=object.birth_fk member=object %}
+			{% endif %}
 		</div>
-		<div class="card-body">
-			{% for event_type in all_events %}
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header">
-							<h4>{{ event_type.type.name }}:</h4>
-						</div>
-						<div class="card-body">
-							{% for event in event_type.list %}
-								<div class="card">
-									<div class="card-header">
-										<div class="row">
-											<h5 class="col card-title">{{ forloop.counter }}. {{ event_type.type.name }} - {{ event.event_fk.title }}:</h5>
-											<div class="col-2 dropdown">
-												<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-												<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<a class="dropdown-item" href="{% url 'core:update_event' member_event_pk=event.pk event_type_pk=event.event_fk.event_type_fk.pk %}">Modifier</a>
-													<a class="dropdown-item" href="{% url 'core:delete_member_event' event.pk %}">Supprimer</a>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="card-body">
-										<div class="row">
-											<div class="col-6">
-												{% include 'geneafamilycore/event/detail_blocks/date_display.html' with event=event.event_fk %}
-											</div>
-											<div class="col-6">
-												<p>{{ event.event_fk.content }}</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
-				</div>
-			{% endfor %}
+
+		<div class="col-12">
+			{% if object.death_fk %}
+				{% include 'geneafamilycore/death/detail_block.html' with object=object.death_fk member=object %}
+			{% endif %}
+		</div>
+
+		<div class="col-12">
+			{% if object.baptism_fk %}
+				{% include 'geneafamilycore/baptism/detail_block.html' with object=object.baptism_fk member=object %}
+			{% endif %}
+		</div>
+
+		<div class="col-12">
+			{% if object.military_fk %}
+				{% include 'geneafamilycore/military/detail_block.html' with object=object.military_fk member=object %}
+			{% endif %}
+		</div>
+
+		<div class="col-12">
+			{% if object.get_residences %}
+				{% include 'geneafamilycore/residence/detail_block.html' with object_list=object.get_residences member=object %}
+			{% endif %}
+		</div>
+
+		<div class="col-12">
+			{% if object.get_jobs %}
+				{% include 'geneafamilycore/job/detail_block.html' with object_list=object.get_jobs member=object %}
+			{% endif %}
+		</div>
+
+		<div class="col-12">
+			{% if object.get_sources %}
+				{% include 'geneafamilycore/source/detail_block.html' with object_list=object.get_sources member=object %}
+			{% endif %}
 		</div>
 	</div>
+	<div class="tab-pane fade" id="narrativ" role="tabpanel" aria-labelledby="narrativ-tab">profile</div>
+	<div class="tab-pane fade" id="tree" role="tabpanel" aria-labelledby="tree-tab">...</div>
 </div>
-{% endcomment %}
 {% endblock %}

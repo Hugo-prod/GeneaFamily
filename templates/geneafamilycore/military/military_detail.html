@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Fiche militaire de "{{ object.get_member }}"{% endblock %}
+
+{% block content %}
+	{% include 'geneafamilycore/military/detail_block.html' %}
+{% endblock %}

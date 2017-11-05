@@ -1,0 +1,10 @@
+<a href="#military_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-user-secret"></i> <span class="d-none d-md-inline">Militaire</span></a>
+<div class="collapse" id="military_menu">
+	{% if object.military_fk %}
+		<a href="#military" class="list-group-item" data-parent="#military_menu"><i class="fa fa-eye"></i> Voir</a>
+		<a href="{#% url 'core:update_military' object.pk %#}" class="list-group-item" data-parent="#military_menu"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+		<a href="{% url 'core:delete_military' object.military_fk.pk %}" class="list-group-item" data-parent="#military_menu"><i class="fa fa-trash-o"></i> Supprimer</a>
+	{% else %}
+		<a href="{% url 'core:create_military' object.pk %}" class="list-group-item" data-parent="#military_menu"><i class="fa fa-pencil"></i> Créer</a>
+	{% endif %}
+</div>

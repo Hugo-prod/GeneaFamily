@@ -2,14 +2,12 @@
 
 {% block subtitle %}Liste de tous les individus:{% endblock %}
 
+{% block actions %}<a class="btn btn-sm btn-primary" href="{% url 'core:create_member' %}">Créer un individu</a>{% endblock %}
+
 {% block content %}
 
 {% if not object_list %}
 	<p>Aucun individu à afficher, pour créer un individu maintenant <a href="{% url 'core:create_member' %}">cliquez ici</a>.</p>
-{% else %}
-	<div style="margin-bottom: 20px;">
-		<a class="btn btn-sm btn-primary" href="{% url 'core:create_member' %}">Créer un individu</a>
-	</div>
 {% endif %}
 
 <table class="table table-bordered">

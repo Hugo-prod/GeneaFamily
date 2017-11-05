@@ -14,12 +14,15 @@ military_urlpatterns = [
 	# Créer un object military vide et redirect sur cette page
 	url(r'^military/(?P<member_pk>\d+)/create$',
 		CreateMilitary.as_view(
+			# TEMPO HACK: just for create this object
+			form_class=MilitaryClassForm,
 			template_name='geneafamilycore/military/forms/create_military.html'),
 				name='create_military'),
 
 	# Update a military
 	url(r'^military/(?P<pk>\d+)/signalment/update$',
 		UpdateView.as_view(
+			model=Military,
 			form_class=MilitarySignalmentForm,
 			template_name='geneafamilycore/military/forms/update_signalment_military.html'),
 				name='update_signalment_military'),
@@ -27,6 +30,7 @@ military_urlpatterns = [
 	# Update a military
 	url(r'^military/(?P<pk>\d+)/class/update$',
 		UpdateView.as_view(
+			model=Military,
 			form_class=MilitaryClassForm,
 			template_name='geneafamilycore/military/forms/update_class_military.html'),
 				name='update_class_military'),
@@ -34,6 +38,7 @@ military_urlpatterns = [
 	# Update a military
 	url(r'^military/(?P<pk>\d+)/instruction/update$',
 		UpdateView.as_view(
+			model=Military,
 			form_class=MilitaryInstructionForm,
 			template_name='geneafamilycore/military/forms/update_instruction_military.html'),
 				name='update_instruction_military'),
@@ -41,6 +46,7 @@ military_urlpatterns = [
 	# Update a military
 	url(r'^military/(?P<pk>\d+)/recruitment/update$',
 		UpdateView.as_view(
+			model=Military,
 			form_class=MilitaryRecruitmentForm,
 			template_name='geneafamilycore/military/forms/update_recruitment_military.html'),
 				name='update_recruitment_military'),
@@ -48,6 +54,7 @@ military_urlpatterns = [
 	# Update a military
 	url(r'^military/(?P<pk>\d+)/advice/update$',
 		UpdateView.as_view(
+			model=Military,
 			form_class=MilitaryAdviceForm,
 			template_name='geneafamilycore/military/forms/update_advice_military.html'),
 				name='update_advice_military'),
@@ -73,5 +80,5 @@ military_urlpatterns = [
 			model=Military,
 			paginate_by=20,
 			template_name='geneafamilycore/military/all_military.html'),
-				name='all_member_militarys'),
+				name='all_military'),
 ]

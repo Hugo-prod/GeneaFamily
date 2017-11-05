@@ -1,11 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView
 
 from GeneaFamilyCore.models import Military, Member
 
 
-class CreateMilitary(FormView):
+class CreateMilitary(CreateView):
+
+	def dispatch(self, request, *args, **kwargs):
+		""" If object is already exist, then redirect to update this"""
+		if Member.objects.get(pk=self.kwargs['member_pk']).military_fk:
+			return redirect(
+				reverse('core:military_detail',
+						args=[Member.objects.get(
+							pk=self.kwargs['member_pk']).military_fk.pk]))
+		else:
+			return super(CreateMilitary, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		military_obj = form.save()

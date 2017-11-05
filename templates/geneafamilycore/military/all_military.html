@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les fiches militaires:{% endblock %}
+
+{% block content %}
+
+{% if not object_list %}<p>Aucune fiche militaire à afficher</p>{% endif %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Individu</th>
+			<th>Matricule</th>
+			<th>Classe de mobilisation</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for military in object_list %}
+		<tr>
+			<th scope="row">{{ military.pk }}</th>
+			<td><a href="{% url 'core:member_detail' military.get_member.pk %}">{{ military.get_member }}</a></td>
+			<td>{{ military.recruitment_matricul_number }}</td>
+			<td>{{ military.mobilisation_class }}</td>
+			<td>
+				<a href="{% url 'core:military_detail' military.pk %}">Voir la fiche</a>
+				<a href="{% url 'core:delete_military' military.pk %}">Supprimer</a>
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

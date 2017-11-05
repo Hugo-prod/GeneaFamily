@@ -1,0 +1,17 @@
+<a href="#parents_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-group"></i> <span class="d-none d-md-inline">Parents</span></a>
+<div class="collapse" id="parents_menu">
+	{% if object.get_parents %}
+    	<a href="#parents" class="list-group-item" data-parent="#parents_menu"><i class="fa fa-eye"></i> Voir</a>
+    	<a href="{% url 'core:update_family' object.get_parents.pk %}" class="list-group-item" data-parent="#parents_menu"><i class="fa fa-pencil-square-o"></i> Modifier</a>
+    {% else %}
+		<a href="" class="list-group-item" data-parent="#parents_menu"><i class="fa fa-pencil"></i> Créer [TODO]</a>
+    {% endif %}
+</div>
+
+<a href="#family_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-venus-mars"></i> <span class="d-none d-md-inline">Familles</span></a>
+<div class="collapse" id="family_menu">
+	{% if object.get_families %}
+		<a href="#family" class="list-group-item" data-parent="#family_menu"><i class="fa fa-eye"></i> Voir</a>
+	{% endif %}
+	<a href="{% url 'core:create_family_with_member' object.pk %}" class="list-group-item" data-parent="#family_menu"><i class="fa fa-pencil"></i> Créer</a>
+</div>

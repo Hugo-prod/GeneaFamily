@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView, DeleteView
 
@@ -6,6 +6,16 @@ from GeneaFamilyCore.models import Death, Member
 
 
 class CreateDeath(CreateView):
+
+	def dispatch(self, request, *args, **kwargs):
+		""" If object is already exist, then redirect to update this"""
+		if Member.objects.get(pk=self.kwargs['member_pk']).death_fk:
+			return redirect(
+				reverse('core:update_death',
+						args=[Member.objects.get(
+							pk=self.kwargs['member_pk']).death_fk.pk]))
+		else:
+			return super(CreateDeath, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		death_obj = form.save()

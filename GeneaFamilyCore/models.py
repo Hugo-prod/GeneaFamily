@@ -136,6 +136,11 @@ class Member(models.Model):
 		max_length=50,
 		verbose_name='Nom de famille')
 
+	pseudonyme = models.CharField(
+		blank=True,
+		max_length=250,
+		verbose_name='Surnoms')
+
 	gender = models.CharField(
 		max_length=1,
 		choices=genderChoices,
@@ -175,12 +180,6 @@ class Member(models.Model):
 		null=True,
 		on_delete=models.SET_NULL)
 
-	def get_absolute_url(self):
-		return reverse('core:member_detail', args=[int(self.id)])
-
-	def __str__(self):
-		return '{} {}'.format(self.first_name, self.family_name)
-
 	def get_events(self):
 		all_events = []
 		for event_type in EventType.objects.all():
@@ -194,6 +193,36 @@ class Member(models.Model):
 						event_fk__event_type_fk__name=event_type.name)
 					})
 		return all_events
+
+	def get_residences(self):
+		return Residence.objects.filter(member_fk=self)
+
+	def get_jobs(self):
+		return Job.objects.filter(member_fk=self)
+
+	def get_sources(self):
+		return Source.objects.filter(member_fk=self)
+
+	def get_parents(self):
+		if Child.objects.filter(child_fk=self).exists():
+			return Child.objects.get(child_fk=self).family_fk
+
+	def get_families(self):
+		if Family.objects.filter(Q(Q(father_fk=self) | Q(mother_fk=self))).exists():
+			return Family.objects.filter(Q(Q(father_fk=self) | Q(mother_fk=self)))
+
+	def get_age(self):
+		if self.birth_fk and self.death_fk:
+			return self.death_fk.date.year - self.birth_fk.date.year - \
+				((self.death_fk.date.month, self.death_fk.date.day) < \
+					(self.birth_fk.date.month, self.birth_fk.date.day))
+
+
+	def get_absolute_url(self):
+		return reverse('core:member_detail', args=[int(self.id)])
+
+	def __str__(self):
+		return '{} {}'.format(self.first_name, self.family_name)
 
 	class Meta:
 		ordering = ['family_name']
@@ -218,6 +247,8 @@ class MemberEvent(models.Model):
 
 class Family(models.Model):
 
+	# FIXME: si on supprimer un membre qui est père ou mère, 
+	# ça supprimer l'object Family ? (je pense que oui donc setnull)
 	mother_fk = models.ForeignKey(
 		Member,
 		related_name='mother',
@@ -235,7 +266,8 @@ class Family(models.Model):
 	union_fk = models.ForeignKey(
 		'Union',
 		blank=True,
-		null=True)
+		null=True,
+		on_delete=models.SET_NULL)
 
 	def get_family_name(self):
 		# TODO: make this with union
@@ -273,10 +305,6 @@ class Child(models.Model):
 	child_fk = models.ForeignKey(
 		Member,
 		verbose_name='Enfant')
-
-	def full_clean(self, exclude=None, validate_unique=True):
-		print('PERE:', self.family_fk.father_fk)
-		print('CHILD:', self.child_fk)
 
 	def get_absolute_url(self):
 		return reverse('core:family_detail', args=[self.family_fk.pk])
@@ -353,10 +381,12 @@ class Baptism(models.Model):
 
 	date = models.DateField(
 		blank=True,
+		null=True,
 		verbose_name='Date du baptême')
 
 	time = models.TimeField(
 		blank=True,
+		null=True,
 		verbose_name='Heure du baptême')
 
 	date_is_approximately = models.BooleanField(
@@ -369,6 +399,7 @@ class Baptism(models.Model):
 		blank=True,
 		null=True,
 		related_name='godfather',
+		limit_choices_to={'gender': 'M'},
 		verbose_name='Parrain')
 
 	godmother_fk = models.ForeignKey(
@@ -376,6 +407,7 @@ class Baptism(models.Model):
 		blank=True,
 		null=True,
 		related_name='godmother',
+		limit_choices_to={'gender': 'W'},
 		verbose_name='marraine')
 
 	locality_fk = models.ForeignKey(
@@ -407,6 +439,7 @@ class Death(models.Model):
 
 	time = models.TimeField(
 		blank=True,
+		null=True,
 		verbose_name='Heure de décès')
 
 	date_is_approximately = models.BooleanField(
@@ -468,8 +501,14 @@ class Union(models.Model):
 		('P','Pacse'),
 		('D','Mariage posthume'),)
 
+	union_type = models.CharField(
+		max_length=1,
+		choices=union_type_Choices,
+		verbose_name='Type d\'union')
+
 	start_date = models.DateField(
 		blank=True,
+		null=True,
 		verbose_name='Date de l\'union')
 
 	start_date_is_approximately = models.BooleanField(
@@ -479,17 +518,13 @@ class Union(models.Model):
 
 	end_date = models.DateField(
 		blank=True,
+		null=True,
 		verbose_name='Date de fin de l\'union')
 
 	end_date_is_approximately = models.BooleanField(
 		default=False,
 		verbose_name='Environ',
 		help_text='Cochez cette case si la date de fin de l\'union est approximative.')
-
-	union_type = models.CharField(
-		max_length=1,
-		choices=union_type_Choices,
-		verbose_name='Type d\'union')
 
 	locality_fk = models.ForeignKey(
 		Locality,
@@ -498,11 +533,19 @@ class Union(models.Model):
 		verbose_name='Lieu',
 		help_text='Lieu de l\'union')
 
+	def get_family(self):
+		return Family.objects.get(union_fk=self)
+
 	def get_witnesses(self):
-		return UnionWitness.objects.filter(wedding_fk=self)
+		return UnionWitness.objects.filter(union_fk=self)
 
 	def get_comparers(self):
-		return UnionComparer.objects.filter(wedding_fk=self)
+		return UnionComparer.objects.filter(union_fk=self)
+
+	def get_absolute_url(self):
+		return reverse(
+			'core:family_detail',
+			args=[Family.objects.get(union_fk=self).pk])
 
 
 class UnionWitness(models.Model):
@@ -512,21 +555,26 @@ class UnionWitness(models.Model):
 		('M','La mariée'),
 		('U','Non spéficié'),)
 
-	wedding_fk = models.ForeignKey(Union)
+	union_fk = models.ForeignKey(Union)
 
-	member_fk = models.ForeignKey(Member)
+	member_fk = models.ForeignKey(
+		Member,
+		verbose_name='Témoin')
 
 	for_who = models.CharField(
 		max_length=1,
 		choices=for_who_Choices,
+		verbose_name='Pour',
 		help_text='Pour qui ce témoin acte sa présence')
 
 
 class UnionComparer(models.Model):
 
-	wedding_fk = models.ForeignKey(Union)
+	union_fk = models.ForeignKey(Union)
 
-	member_fk = models.ForeignKey(Member)
+	member_fk = models.ForeignKey(
+		Member,
+		verbose_name='Comparant(e)')
 
 
 class Military(models.Model):
@@ -582,10 +630,12 @@ class Military(models.Model):
 
 	size = models.FloatField(
 		blank=True,
+		null=True,
 		verbose_name='Taille')
 
 	rectified_size = models.FloatField(
 		blank=True,
+		null=True,
 		verbose_name='Taille')
 
 	additional_note = models.TextField(
@@ -612,15 +662,18 @@ class Military(models.Model):
 	# Matricule
 	recruitment_matricul_number = models.IntegerField(
 		blank=True,
+		null=True,
 		verbose_name='Numéro matricule du recrutement')
 
 	mobilisation_class = models.IntegerField(
 		blank=True,
+		null=True,
 		verbose_name='Classe de mobilisation')
 
 	# Numéro de tirage 
 	recruitment_draw = models.IntegerField(
 		blank=True,
+		null=True,
 		verbose_name='Numéro de tirage')
 
 	canton_recruitment = models.CharField(
@@ -639,3 +692,96 @@ class Military(models.Model):
 
 	def get_member(self):
 		return Member.objects.get(military_fk=self)
+
+	def get_absolute_url(self):
+		return reverse('core:military_detail', args=[self.pk])
+
+
+class Residence(models.Model):
+
+	member_fk = models.ForeignKey(
+		'Member',
+		verbose_name='Membre')
+
+	locality_fk = models.ForeignKey(
+		'Locality',
+		blank=True,
+		null=True,
+		verbose_name='Lieu')
+
+	date = models.DateField(
+		null=True,
+		blank=True,
+		verbose_name='Date')
+
+	date_is_approximately = models.BooleanField(
+		default=False,
+		verbose_name='Cochez si la date est approximative')
+
+
+class Job(models.Model):
+
+	job_name = models.CharField(
+		max_length=254,
+		verbose_name='Metier',
+		help_text='Veuillez inscrire le nom du métier')
+
+	date = models.DateField(
+		null=True,
+		blank=True,
+		verbose_name='Date')
+
+	date_is_approximately = models.BooleanField(
+		default=False,
+		verbose_name='Cochez si la date est approximative')
+
+	member_fk = models.ForeignKey(
+		'Member',
+		verbose_name='Membre')
+
+	locality_fk = models.ForeignKey(
+		'Locality',
+		blank=True,
+		null=True,
+		verbose_name='Lieu')
+
+
+class Source(models.Model):
+
+	source_typeChoices = (
+		('G','Global'),
+		('N','Naissance'),
+		('D','Décès'),
+		('B','Baptême'),
+		('M','Militaire'))
+
+	member_fk = models.ForeignKey('Member')
+
+	source_type = models.CharField(
+		max_length=1,
+		choices=source_typeChoices,
+		verbose_name='Sourcer')
+
+	img_upload = models.ImageField(
+		upload_to='source',
+		blank=True,
+		null=True,
+		verbose_name='Photo')
+
+	url_link = models.CharField(
+		max_length=2048,
+		blank=True,
+		null=True,
+		verbose_name='Lien de la source (URL)')
+
+	page_link = models.CharField(
+		max_length=250,
+		blank=True,
+		null=True,
+		verbose_name='Numéro de page')
+
+	additional_note = models.TextField(
+		blank=True,
+		null=True,
+		verbose_name='Notes complémentaire')
+

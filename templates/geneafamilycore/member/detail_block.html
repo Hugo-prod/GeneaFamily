@@ -1,0 +1,62 @@
+<div style="padding: 15px;">
+    <div id="identity" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-vcard-o"></i> Identité:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'core:update_member' member.pk %}">Modifier</a>
+                            <a class="dropdown-item" href="{% url 'core:update_instruction_member' member.pk %}">Modifier le niveau d'instruction</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Prénom: </strong>{{ member.first_name }}</p>
+                        </div>
+                        <div class="col">
+                            <p><strong>Nom: </strong>{{ member.family_name }}</p>
+                        </div>
+                    </div>
+                    <p><strong>Surnom: </strong>{{ member.pseudonyme }}</p>
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Genre: </strong>{{ member.get_gender_display }}</p>
+                        </div>
+                        <div class="col">
+                            <p title="({% if object.birth_fk.date %}{{object.birth_fk.date|date:'d/m/Y'}}{% else %}...{% endif %} : {% if object.death_fk.date %}{{object.death_fk.date|date:'d/m/Y'}}{% else %}...{% endif %})"><strong>Age: </strong>{% if object.birth_fk and object.death_fk %}{{object.get_age}} ans {% else %}({% if object.birth_fk.date %}{{object.birth_fk.date|date:'d/m/Y'}}{% else %}...{% endif %} : {% if object.death_fk.date %}{{object.death_fk.date|date:'d/m/Y'}}{% else %}...{% endif %}){% endif %}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <p><strong>Sait lire: </strong>
+                        {% if member.read %}
+                            <i class="fa fa-check-square-o"></i>
+                        {% else %}
+                            <i class="fa fa-square-o"></i>
+                        {% endif %}
+                    </p>
+                    <p><strong>Sait ecrire: </strong>
+                        {% if member.write %}
+                            <i class="fa fa-check-square-o"></i>
+                        {% else %}
+                            <i class="fa fa-square-o"></i>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
 from GeneaFamilyCore.models import Member
-from GeneaFamilyCore.forms.member import MemberForm
+from GeneaFamilyCore.forms.member import *
 from GeneaFamilyCore.views.member import MemberDetail
 
 member_urlpatterns = [
@@ -24,6 +24,14 @@ member_urlpatterns = [
 			form_class=MemberForm,
 			template_name='geneafamilycore/member/forms/update_member.html'),
 				name='update_member'),
+
+	# Update instruction
+	url(r'^member/instruction/(?P<pk>\d+)/update$',
+		UpdateView.as_view(
+			model=Member,
+			form_class=MemberInstructionForm,
+			template_name='geneafamilycore/member/forms/update_instruction_member.html'),
+				name='update_instruction_member'),
 
 	# Delete member
 	url(r'^member/(?P<pk>\d+)/delete$',

@@ -1,31 +1,32 @@
-<div class="card">
-	<div class="card-header">
-		<div class="row">
-			<h4 class="col card-title">Fiche militaire:</h4>
-			<div class="col-1 dropdown">
-				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				{% if military %}
-					<a class="dropdown-item" href="{% url 'core:delete_military' military.pk %}">Supprimer</a>
-				{% else %}
-					<a class="dropdown-item" href="{% url 'core:create_military' member.pk %}">Créer</a>
-				{% endif %}
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="card-body">
-	{% if military %}
-		
+<div style="padding: 15px;">
+    <div id="military" class="col-22 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-vcard-o"></i> Fiche militaire:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="{% url 'core:delete_military' object.pk %}">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
 <!-- SIGNALEMENT -->
 <div class="card">
 	<div class="card-header">
 		<div class="row">
 			<h4 class="col card-title">Signalement:</h4>
-			<div class="col-1 dropdown">
+			<div class="col-2 dropdown">
 				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{% url 'core:update_signalment_military' military.pk %}">Modifier</a>
+				<div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{% url 'core:update_signalment_military' object.pk %}">Modifier</a>
 				</div>
 			</div>
 		</div>
@@ -33,19 +34,19 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p><label>Visage:</label> {{ military.head }}</p>
-				<p><label>Cheveux:</label> {{ military.hair }}</p>
-				<p><label>Front:</label> {{ military.forehead }}</p>
-				<p><label>Yeux:</label> {{ military.eyes }}</p>
-				<p><label>Nez:</label> {{ military.nose }}</p>
-				<p><label>Bouche:</label> {{ military.mouth }}</p>
-				<p><label>Menton:</label> {{ military.chin }}</p>
-				<p><label>Taille:</label> {{ military.size }}</p>
-				<p><label>Taille rectifiée:</label> {{ military.rectified_size }}</p>
+				<p><strong>Visage:</strong> {{ object.head }}</p>
+				<p><strong>Cheveux:</strong> {{ object.hair }}</p>
+				<p><strong>Front:</strong> {{ object.forehead }}</p>
+				<p><strong>Yeux:</strong> {{ object.eyes }}</p>
+				<p><strong>Nez:</strong> {{ object.nose }}</p>
+				<p><strong>Bouche:</strong> {{ object.mouth }}</p>
+				<p><strong>Menton:</strong> {{ object.chin }}</p>
+				<p><strong>Taille:</strong> {{ object.size }}</p>
+				<p><strong>Taille rectifiée:</strong> {{ object.rectified_size }}</p>
 			</div>
 			<div class="col">
-				<p><label>Remarques complémentaires:</label> {{ military.additional_note }}</p>
-				<p><label>Marques particulières:</label> {{ military.special_brand }}</p>
+				<p><strong>Remarques complémentaires:</strong> {{ object.additional_note }}</p>
+				<p><strong>Marques particulières:</strong> {{ object.special_brand }}</p>
 			</div>
 		</div>
 	</div>
@@ -56,10 +57,10 @@
 	<div class="card-header">
 		<div class="row">
 			<h4 class="col card-title">Matricule:</h4>
-			<div class="col-1 dropdown">
+			<div class="col-2 dropdown">
 				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{% url 'core:update_class_military' military.pk %}">Modifier</a>
+				<div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{% url 'core:update_class_military' object.pk %}">Modifier</a>
 				</div>
 			</div>
 		</div>
@@ -67,8 +68,8 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p><label>Numéro matricule du recrutement:</label> {{ military.recruitment_matricul_number }}</p>
-				<p><label>Classe de mobilisation:</label> {{ military.mobilisation_class }}</p>
+				<p><strong>Numéro matricule du recrutement:</strong> {{ object.recruitment_matricul_number }}</p>
+				<p><strong>Classe de mobilisation:</strong> {{ object.mobilisation_class }}</p>
 			</div>
 		</div>
 	</div>
@@ -79,10 +80,10 @@
 	<div class="card-header">
 		<div class="row">
 			<h4 class="col card-title">Degré d'instruction:</h4>
-			<div class="col-1 dropdown">
+			<div class="col-2 dropdown">
 				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{% url 'core:update_instruction_military' military.pk %}">Modifier</a>
+				<div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{% url 'core:update_instruction_military' object.pk %}">Modifier</a>
 				</div>
 			</div>
 		</div>
@@ -90,8 +91,8 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p><label>Degré d'instruction général:</label> {{ military.get_general_instruction_display }}</p>
-				<p><label>Degré d'instruction militaire:</label> {{ military.get_military_instruction_display }}</p>
+				<p><strong>Degré d'instruction général:</strong> {{ object.get_general_instruction_display }}</p>
+				<p><strong>Degré d'instruction militaire:</strong> {{ object.get_military_instruction_display }}</p>
 			</div>
 		</div>
 	</div>
@@ -102,10 +103,10 @@
 	<div class="card-header">
 		<div class="row">
 			<h4 class="col card-title">Décision du conseil de révision et motifs:</h4>
-			<div class="col-1 dropdown">
+			<div class="col-2 dropdown">
 				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="{% url 'core:update_recruitment_military' military.pk %}">Modifier</a>
+				<div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{% url 'core:update_recruitment_military' object.pk %}">Modifier</a>
 				</div>
 			</div>
 		</div>
@@ -113,20 +114,11 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p>Inscrit sous le n'°{{ military.recruitment_draw }} de la liste du canton {{ military.canton_recruitment }} </p>
+				<p>Inscrit sous le n'°{{ object.recruitment_draw }} de la liste du canton {{ object.canton_recruitment }} </p>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-	{% else %}
-		<div class="text-center">
-			<p>La fiche militaire de l'individu {{ object }} n'existe pas</p>
-			<a class="btn btn-primary" href="{% url 'core:create_military' member.pk %}">Créer la fiche militaire maintenant</a>
-		</div>
-	{% endif %}
-	</div>
-	<div class="card-footer">
-	</div>
+        </div>
+    </div>
 </div>

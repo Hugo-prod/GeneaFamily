@@ -38,7 +38,7 @@ baptism_urlpatterns = [
 	url(r'^baptism/(?P<pk>\d+)$',
 		DetailView.as_view(
 			model=Baptism,
-			template_name='geneafamilycore/baptism/member_baptism_detail.html'),
+			template_name='geneafamilycore/baptism/baptism_detail.html'),
 				name='baptism_detail'),
 
 	# All Baptisms
@@ -46,6 +46,6 @@ baptism_urlpatterns = [
 		ListView.as_view(
 			model=Baptism,
 			paginate_by=20,
-			template_name='geneafamilycore/baptism/all_member_baptisms.html'),
-				name='all_member_baptisms'),
+			template_name='geneafamilycore/baptism/all_baptism.html'),
+				name='all_baptism'),
 ]

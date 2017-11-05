@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de toutes les unions:{% endblock %}
+
+{% block content %}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Homme</th>
+			<th>Femme</th>
+			<th>Nom de famille</th>
+			<th>Type</th>
+			<th>Date</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for union in object_list %}
+		<tr>
+			<th scope="row">{{ union.pk }}</th>
+			<td><a href="{% url 'core:member_detail' union.get_family.father_fk.pk %}">{{ union.get_family.father_fk }}</a></td>
+			<td><a href="{% url 'core:member_detail' union.get_family.mother_fk.pk %}">{{ union.get_family.mother_fk }}</a></td>
+			<td>{{ union.get_family.get_family_name }}</td>
+			<td>{{ union.get_union_type_display }}</td>
+			<td>{% if union.start_date %}{{ union.start_date|date:'d/m/Y' }}{% else %}(???){% endif %} : {% if union.end_date %}{{ union.end_date|date:'d/m/Y' }}{% else %}(???){% endif %}</td>
+			<td>
+				<a href="{% url 'core:union_detail' union.pk %}">Voir</a>
+				<a href="{% url 'core:delete_union' union.pk %}">Supprimer</a>
+			</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

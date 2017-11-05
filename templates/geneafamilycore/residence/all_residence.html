@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block subtitle %}Liste de tous les lieux:{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Membre</th>
+			<th>Date</th>
+			<th>Ville</th>
+			<th>Complément d'adresse</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for locality in object_list %}
+		<tr>
+			<th scope="row">{{ locality.pk }}</th>
+			<td><a href="{% url 'core:locality_detail' locality.pk %}">{{ locality.country }}</a></td>
+			<td>{{ locality.city }}</td>
+			<td>{{ locality.additional_address_information|truncatechars:50 }}</td>
+			<td>{% if locality.latitude %}{{ locality.latitude }}{% endif %}</td>
+			<td>{% if locality.longitude %}{{ locality.longitude }}{% endif %}</td>
+		</tr>
+	{% empty %}
+		<tr>
+			<th scope="row">...</th>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+			<td>...</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% include 'generic/pagination.html' %}
+{% endblock %}

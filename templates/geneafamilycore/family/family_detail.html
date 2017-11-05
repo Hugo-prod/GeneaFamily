@@ -3,48 +3,5 @@
 {% block subtitle %}Detail de la famille "{{ object.get_family_name }}"{% endblock %}
 
 {% block content %}
-<div class="col">
-	<div class="card">
-		<div class="card-header">
-			<div class="row">
-				<h4 class="col card-title">Famille "{{ object.get_family_name }}":</h4>
-				<div class="col-1 dropdown">
-					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="{% url 'core:update_family' object.pk %}">Modifier</a>
-						<a class="dropdown-item" href="{% url 'core:delete_family' object.pk %}">Supprimer</a>
-						<a class="dropdown-item" href="{% url 'core:add_child' object.pk %}">Ajouter un enfant</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<div class="row">
-				<div class="col">
-					<p><label>Père:</label> {% if object.father_fk %}<a href="{% url 'core:member_detail' object.father_fk.pk %}">{{ object.father_fk }}</a>{% endif %}</p>
-				</div>
-				<div class="col">
-					<p><label>Mère:</label> {% if object.mother_fk %}<a href="{% url 'core:member_detail' object.mother_fk.pk %}">{{ object.mother_fk }}</a>{% endif %}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					{% include 'geneafamilycore/union/detail_block.html' with object=object.union_fk family=object %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="text-center"><h4>Enfants:</h4></div>
-					<ol>
-					{% for child in object.get_children %}
-						<li><a href="{% url 'core:member_detail' child.child_fk.pk %}">{{ child.child_fk }}</a> - <a class="btn btn-sm btn-danger" href="{% url 'core:remove_child' child.pk %}" title="Supprimer {{ child.child_fk }} de la famille">Enlever</a></li>
-					{% empty %}
-						<p class="text-center">Aucun enfant, en ajouter un maintenant <a href="{% url 'core:add_child' object.pk %}">cliquez ici</a>.</p>
-					{% endfor %}
-					</ol>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+    {% include 'geneafamilycore/family/detail_block_family.html' with family=object %}
 {% endblock %}

@@ -42,7 +42,7 @@ death_urlpatterns = [
 	url(r'^death/(?P<pk>\d+)$',
 		DetailView.as_view(
 			model=Death,
-			template_name='geneafamilycore/death/member_death_detail.html'),
+			template_name='geneafamilycore/death/death_detail.html'),
 				name='death_detail'),
 
 	# All Deaths
@@ -50,8 +50,8 @@ death_urlpatterns = [
 		ListView.as_view(
 			model=Death,
 			paginate_by=20,
-			template_name='geneafamilycore/death/all_member_deaths.html'),
-				name='all_member_deaths'),
+			template_name='geneafamilycore/death/all_death.html'),
+				name='all_death'),
 
 	#############
 	## WITNESS ##

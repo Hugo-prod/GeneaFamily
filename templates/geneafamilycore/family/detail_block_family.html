@@ -1,0 +1,133 @@
+<div style="padding: 15px;">
+    <div id="family" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-group"></i> Famille:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'core:update_family' family.pk %}">Modifier</a>
+                            <a class="dropdown-item" href="{% url 'core:delete_family' family.pk %}">Supprimer</a>
+                            <a class="dropdown-item" href="{% url 'core:add_child' family.pk %}">Ajouter un enfant</a>
+                            <hr>
+                            {% if family.union_fk %}
+                                <a class="dropdown-item" href="{% url 'core:update_union' family.union_fk.pk %}">Modifier l'union</a>
+                                <a class="dropdown-item" href="{% url 'core:delete_union' family.union_fk.pk %}">Supprimer l'union</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'core:create_union' family.pk %}">Créer l'union</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Père:</h4>
+                    {% if family.father_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' family.father_fk.pk %}">{{ family.father_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ family.father_fk.first_name }}</p>
+                        <p><strong>Nom: </strong>{{ family.father_fk.family_name }}</p>
+                        <p><strong>Surnom: </strong>{{ family.father_fk.pseudonyme }}</p>
+                        <p><strong>Genre: </strong>{{ family.father_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <h4>Mère:</h4>
+                    {% if family.mother_fk %}
+                        <p><strong><a href="{% url 'core:member_detail' family.mother_fk.pk %}">{{ family.mother_fk }}</a></strong></p>
+                        <p><strong>Prénom: </strong>{{ family.mother_fk.first_name }}</p>
+                        <p><strong>Nom: </strong>{{ family.mother_fk.family_name }}</p>
+                        <p><strong>Surnom: </strong>{{ family.mother_fk.pseudonyme }}</p>
+                        <p><strong>Genre: </strong>{{ family.mother_fk.get_gender_display }}</p>
+                        <p><strong>Age: </strong>[TODO]</p>
+                    {% else %}
+                        <p><strong>Non défini</strong></p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if family.union_fk %}
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Union:</h4>
+                        <p class="blockquote-footer">Type d'union:</p>
+                    </div>
+                    <div class="col">
+                        <p><strong>Type d'union: </strong>{{ family.union_fk.get_union_type_display }}</p>
+                        <p><strong>Date de début de l'union: </strong>{{ family.union_fk.start_date }}</p>
+                        <p><strong>Date de fin de l'union: </strong>{{ family.union_fk.end_date }}</p>
+                    </div>
+                    {% if family.union_fk.get_comparers %}
+                        <div class="col">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="col">Comparants</th>
+                                        <th class="col-1">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for comparer in family.union_fk.get_comparers %}
+                                    <td><a href="{% url 'core:member_detail' comparer.member_fk.pk %}">{{ comparer.member_fk }}</a></td>
+                                    <td><a class="btn btn-sm btn-danger" href="{% url 'core:union_remove_comparer' comparer.pk %}"><i class="fa fa-close"></i></a></td>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                    {% if family.union_fk.get_witnesses %}
+                        <div class="col">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="col">Témoins</th>
+                                        <th class="col-1">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for witness in family.union_fk.get_witnesses %}
+                                    <td><a href="{% url 'core:member_detail' witness.member_fk.pk %}">{{ witness.member_fk }}</a></td>
+                                    <td><a class="btn btn-sm btn-danger" href="{% url 'core:union_remove_witness' witness.pk %}"><i class="fa fa-close"></i></a></td>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if family.get_children %}
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h5>Enfants:</h5>
+                        <p class="blockquote-footer">Enfants de "{{ object }}":</p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="col">Enfants</th>
+                                    <th class="col-1">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for child in family.get_children %}
+                                <td><a href="{% url 'core:member_detail' child.child_fk.pk %}">{{ child.child_fk }}</a></td>
+                                <td><a class="btn btn-sm btn-danger" href="{% url 'core:remove_child' child.pk %}"><i class="fa fa-close"></i></a></td>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

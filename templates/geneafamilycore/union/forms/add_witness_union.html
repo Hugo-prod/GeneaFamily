@@ -1,0 +1,18 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Ajouter un témoin à l'union de "{{ family.father_fk }}" et de "{{ family.mother_fk }}":{% endblock %}
+
+{% block form_title %}Ajouter un témoin à l'union de "{{ family.father_fk }}" et de "{{ family.mother_fk }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		{% buttons %}
+			<a class="btn btn-warning" href="{% url 'core:family_detail' family.pk %}">Annuler</a>
+			<button type="submit" class="btn btn-primary">Valider</button>
+		{% endbuttons %}
+	</form>
+{% endblock %}

@@ -1,0 +1,5 @@
+<a href="#residence_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-home"></i> <span class="d-none d-md-inline">Résidence</span></a>
+<div class="collapse" id="residence_menu">
+    <a href="#residence" class="list-group-item" data-parent="#residence_menu"><i class="fa fa-eye"></i> Voir</a>
+    <a href="{% url 'core:create_residence' object.pk %}" class="list-group-item" data-parent="#residence_menu"><i class="fa fa-pencil"></i> Créer</a>
+</div>
