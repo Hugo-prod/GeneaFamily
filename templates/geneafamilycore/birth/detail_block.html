@@ -30,7 +30,7 @@
                 </div>
                 {% if object.get_comparers %}
                     <div class="col">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th class="col">Comparants</th>
@@ -48,7 +48,7 @@
                 {% endif %}
                 {% if object.get_witnesses %}
                     <div class="col">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th class="col">Témoins</th>
@@ -64,6 +64,9 @@
                         </table>
                     </div>
                 {% endif %}
+            </div>
+            <div class="row">
+                {% include 'geneafamilycore/source/additional_block.html' with object=object.get_sources member=member %}
             </div>
         </div>
     </div>

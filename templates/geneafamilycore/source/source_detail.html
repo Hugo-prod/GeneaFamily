@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block subtitle %} Detail de la source:{% endblock %}
+
+{% block content %}
+<div style="padding: 15px;">
+    <div id="source" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-archive"></i> Source:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'core:update_source' object.pk %}">Modifier</a>
+                            <a class="dropdown-item" href="{% url 'core:delete_source' object.pk %}">Supprimer</a>
+                            <hr>
+							<a class="dropdown-item" href="{% url 'core:source_add_involved_member' object.pk %}">Ajouter un membre impliqué</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <p><strong>Membre concerné:</strong><a href="{% url 'core:member_detail' object.member_fk.pk %}">{{ object.member_fk }}</a></p>
+                    <p><strong>Titre:</strong>{{ object.title }}</p>
+                    <p><strong>Type de source:</strong>{{ object.get_source_type_display }}</p>
+                    <p><strong>Lien (URL):</strong>{% if object.url_link %}{{ object.url_link }}{% endif %}</p>
+                    <p><strong>Page :</strong>{% if object.page_link %}{{ object.page_link }}{% endif %}</p>
+                </div>
+                <div class="col">
+                    <p><strong>Note:</strong>{{ object.additional_note }}</p>
+                </div>
+            </div>
+            {% if object.get_involved_member %}
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <h4>Membres impliqué dans la source:</h4>
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Membre</th>
+                              <th scope="col-1">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for member in object.get_involved_member %}
+                                <tr>
+                                    <th scope="row">{{ member.pk }}</th>
+                                    <td><a href="{% url 'core:member_detail' member.member_fk.pk %}">{{ member.member_fk }}</a></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-danger" href="{% url 'core:source_remove_involved_member' member.pk %}">Supprimer</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <img src="/media/{{ media_url }}{{ object.img_upload }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

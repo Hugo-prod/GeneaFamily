@@ -1,0 +1,54 @@
+<a href="/" class="list-group-item d-inline-block collapsed" data-parent="#sidebar" title="Accueil"><i class="fa fa-home"></i> <span class="d-none d-md-inline"> GeneaFamily</span></a>
+
+<a href="#member_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false"><i class="fa fa-vcard-o"></i> Membre</a>
+<div class="collapse" id="member_menu">
+	<a href="{% url 'core:create_member' %}" class="list-group-item" data-parent="#member_menu" title="Créer un member"><i class="fa fa-pencil"></i> Créer</a>
+	<a href="{% url 'core:all_members' %}" class="list-group-item" data-parent="#member_menu" title="Liste de tous les membres"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#family_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false" data-parent="#sidebar" ><i class="fa fa-group"></i> <span class="d-none d-md-inline">Famille</span></a>
+<div class="collapse" id="family_menu">
+	<a href="{% url 'core:create_family' %}" class="list-group-item" data-parent="#family_menu" title="Créer une famille"><i class="fa fa-pencil"></i> Créer</a>
+	<a href="{% url 'core:all_families' %}" class="list-group-item" data-parent="#family_menu" title="Liste de toutes les familles"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#unions_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-venus-mars"></i> <span class="d-none d-md-inline">Unions</span></a>
+<div class="collapse" id="unions_menu">
+	<a href="{% url 'core:all_unions' %}" class="list-group-item" data-parent="#unions_menu" title="Liste de toutes les unions"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#birth_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-birthday-cake"></i> <span class="d-none d-md-inline">Naissance</span></a>
+<div class="collapse" id="birth_menu">
+	<a href="{% url 'core:all_births' %}" class="list-group-item" data-parent="#birth_menu" title="Liste de toutes les naissances"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#baptism_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-child"></i> <span class="d-none d-md-inline">Baptême</span></a>
+<div class="collapse" id="baptism_menu">
+	<a href="{% url 'core:all_baptisms' %}" class="list-group-item" data-parent="#baptism_menu" title="Liste de tous les baptêmes"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#death_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-heart-o"></i> <span class="d-none d-md-inline">Décès</span></a>
+<div class="collapse" id="death_menu">
+	<a href="{% url 'core:all_deaths' %}" class="list-group-item" data-parent="#death_menu" title="Liste de tous les décès"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#jobs_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-industry"></i> <span class="d-none d-md-inline">Métier</span></a>
+<div class="collapse" id="jobs_menu">
+	<a href="{% url 'core:all_jobs' %}" class="list-group-item" data-parent="#jobs_menu" title="Liste de tous les métiers"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<a href="#military_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-user-secret"></i> <span class="d-none d-md-inline">Militaire</span></a>
+<div class="collapse" id="military_menu">
+	<a href="{% url 'core:all_militaries' %}" class="list-group-item" data-parent="#military_menu" title="Liste de toutes les fiches de renseignement militaire"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+
+<!-- <a href="#residence_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-home"></i> <span class="d-none d-md-inline">Résidence</span></a>
+<div class="collapse" id="residence_menu">
+    <a href="{#% url 'core:all_residences' %#}" class="list-group-item" data-parent="#residence_menu" title="Liste de toutes les résidences"><i class="fa fa-th-list"></i> Liste</a>
+</div>
+ -->
+
+<a href="#location_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-globe"></i> <span class="d-none d-md-inline">Lieu</span></a>
+<div class="collapse" id="location_menu">
+	<a href="{% url 'core:all_locations' %}" class="list-group-item" data-parent="#location_menu" title="Liste de toutes les lieux"><i class="fa fa-th-list"></i> Liste</a>
+</div>

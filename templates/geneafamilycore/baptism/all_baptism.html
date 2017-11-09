@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -14,7 +14,7 @@
 			<th>Parrain</th>
 			<th>Marraine</th>
 			<th>Date</th>
-			<th>Actions</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,17 +24,24 @@
 			<td><a href="{% url 'core:baptism_detail' baptism.pk %}">{{ baptism.get_member.first_name }}</a></td>
 			<td>{{ baptism.get_member.family_name }}</td>
 			<td>{{ baptism.get_member.get_gender_display }}</td>
-			<td><a href="{% url 'core:member_detail' baptism.godfather_fk.pk %}">{{ baptism.godfather_fk }}</a></td>
-			<td><a href="{% url 'core:member_detail' baptism.godmother_fk.pk %}">{{ baptism.godmother_fk }}</a></td>
+			<td>{% if baptism.godfather_fk %}<a href="{% url 'core:member_detail' baptism.godfather_fk.pk %}">{{ baptism.godfather_fk }}</a>{% endif %}</td>
+			<td>{% if baptism.godmother_fk %}<a href="{% url 'core:member_detail' baptism.godmother_fk.pk %}">{{ baptism.godmother_fk }}</a>{% endif %}</td>
 			<td>{{ baptism.date }} {% if baptism.date_is_approximately %}*{% endif %}</td>
-			<td>
-				<a href="{% url 'core:baptism_detail' baptism.pk %}">Voir</a>
-				<a href="{% url 'core:delete_baptism' baptism.pk %}">Supprimer</a>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:baptism_detail' baptism.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_baptism' baptism.get_member.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_baptism' baptism.pk %}">Supprimer</a>
+				</div>
 			</td>
 		</tr>
 	{% empty %}
 		<tr>
 			<th scope="row">...</th>
+			<td>...</td>
 			<td>...</td>
 			<td>...</td>
 			<td>...</td>

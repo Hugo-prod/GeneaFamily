@@ -47,5 +47,5 @@ baptism_urlpatterns = [
 			model=Baptism,
 			paginate_by=20,
 			template_name='geneafamilycore/baptism/all_baptism.html'),
-				name='all_baptism'),
+				name='all_baptisms'),
 ]

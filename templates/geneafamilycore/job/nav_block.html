@@ -1,5 +1,7 @@
 <a href="#jobs_menu" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-industry"></i> <span class="d-none d-md-inline">Métier</span></a>
 <div class="collapse" id="jobs_menu">
-	<a href="#jobs" class="list-group-item" data-parent="#jobs_menu"><i class="fa fa-eye"></i> Voir</a>
+	{% if object.get_jobs %}
+		<a href="#jobs" class="list-group-item" data-parent="#jobs_menu"><i class="fa fa-eye"></i> Voir</a>
+	{% endif %}
 	<a href="{% url 'core:create_job' object.pk %}" class="list-group-item" data-parent="#jobs_menu"><i class="fa fa-pencil"></i> Créer</a>
 </div>

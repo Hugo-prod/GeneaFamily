@@ -294,6 +294,9 @@ class Family(models.Model):
 	def get_absolute_url(self):
 		return reverse('core:family_detail', args=[self.pk])
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='F')
+
 	class Meta:
 		ordering = ['id']
 
@@ -347,6 +350,9 @@ class Birth(models.Model):
 	def get_member(self):
 		return Member.objects.get(birth_fk=self)
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='N')
+
 	def get_comparers(self):
 		return BirthComparer.objects.filter(birth_fk=self)
 
@@ -357,6 +363,10 @@ class Birth(models.Model):
 		return reverse(
 			'core:member_detail',
 			args=[Member.objects.get(birth_fk=self).pk])
+
+	class Meta:
+		ordering = ['date']
+
 
 
 class BirthComparer(models.Model):
@@ -420,10 +430,16 @@ class Baptism(models.Model):
 	def get_member(self):
 		return Member.objects.get(baptism_fk=self)
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='B')
+
 	def get_absolute_url(self):
 		return reverse(
 			'core:member_detail',
 			args=[Member.objects.get(baptism_fk=self).pk])
+
+	class Meta:
+		ordering = ['date']
 
 
 class Death(models.Model):
@@ -463,6 +479,9 @@ class Death(models.Model):
 	def get_member(self):
 		return Member.objects.get(death_fk=self)
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='B')
+
 	def get_comparers(self):
 		return DeathComparer.objects.filter(death_fk=self)
 
@@ -473,6 +492,9 @@ class Death(models.Model):
 		return reverse(
 			'core:member_detail',
 			args=[Member.objects.get(death_fk=self).pk])
+
+	class Meta:
+		ordering = ['date']
 
 
 class DeathComparer(models.Model):
@@ -536,6 +558,9 @@ class Union(models.Model):
 	def get_family(self):
 		return Family.objects.get(union_fk=self)
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='U')
+
 	def get_witnesses(self):
 		return UnionWitness.objects.filter(union_fk=self)
 
@@ -546,6 +571,9 @@ class Union(models.Model):
 		return reverse(
 			'core:family_detail',
 			args=[Family.objects.get(union_fk=self).pk])
+
+	class Meta:
+		ordering = ['id']
 
 
 class UnionWitness(models.Model):
@@ -693,8 +721,14 @@ class Military(models.Model):
 	def get_member(self):
 		return Member.objects.get(military_fk=self)
 
+	def get_sources(self):
+		return Source.objects.filter(source_type='M')
+
 	def get_absolute_url(self):
 		return reverse('core:military_detail', args=[self.pk])
+
+	class Meta:
+		ordering = ['id']
 
 
 class Residence(models.Model):
@@ -717,6 +751,9 @@ class Residence(models.Model):
 	date_is_approximately = models.BooleanField(
 		default=False,
 		verbose_name='Cochez si la date est approximative')
+
+	class Meta:
+		ordering = ['id']
 
 
 class Job(models.Model):
@@ -745,6 +782,9 @@ class Job(models.Model):
 		null=True,
 		verbose_name='Lieu')
 
+	class Meta:
+		ordering = ['id']
+
 
 class Source(models.Model):
 
@@ -753,9 +793,17 @@ class Source(models.Model):
 		('N','Naissance'),
 		('D','Décès'),
 		('B','Baptême'),
+		('F','Famille'),
+		('U','Union'),
 		('M','Militaire'))
 
 	member_fk = models.ForeignKey('Member')
+
+	title = models.CharField(
+		blank=True,
+		null=True,
+		max_length=250,
+		verbose_name='Titre')
 
 	source_type = models.CharField(
 		max_length=1,
@@ -785,3 +833,26 @@ class Source(models.Model):
 		null=True,
 		verbose_name='Notes complémentaire')
 
+	def __str__(self):
+		return self.title
+
+	def get_involved_member(self):
+		return SourceMember.objects.filter(source_fk=self)
+
+	def get_absolute_url(self):
+		return reverse('core:source_detail', args=[self.pk])
+
+	class Meta:
+		ordering = ['id']
+
+
+class SourceMember(models.Model):
+
+	source_fk = models.ForeignKey(Source)
+
+	member_fk = models.ForeignKey(
+		Member,
+		verbose_name='Membre')
+
+	def get_absolute_url(self):
+		return reverse('core:source_detail', args=[self.source_fk.pk])

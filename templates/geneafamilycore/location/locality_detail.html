@@ -3,14 +3,37 @@
 {% block subtitle %}Detail du lieu{% endblock %}
 
 {% block content %}
-<div>
-	<h4>Lieu:</h4>
-	<p><label>Pays: </label>{{ object.country }}</p>
-	<p><label>Ville: </label>{{ object.city }}</p>
-	<p><label>Complément d'adresse: </label>{{ object.additional_address_information }}</p>
-	<p><label>Latitude: </label>{% if object.latitude %}{{ object.latitude }}{% endif %}</p>
-	<p><label>Longitude: </label>{% if object.longitude %}{{ object.longitude }}{% endif %}</p>
-	<a class="btn btn-warning" href="{% url 'core:update_locality' object.pk %}">Modifier</a>
-	<a class="btn btn-danger" href="{% url 'core:delete_locality' object.pk %}">Supprimer</a>
+<div style="padding: 15px;">
+    <div id="death" class="col-12 carde" style="padding: 0px;">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <h3><i class="fa fa-heart-o"></i> Décès:</h3>
+                </div>
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+							<a class="dropdown-item" href="{% url 'core:update_locality' object.pk %}">Modifier</a>
+							<a class="dropdown-item" href="{% url 'core:delete_locality' object.pk %}">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+					<p><strong>Pays: </strong>{{ object.country }}</p>
+					<p><strong>Ville: </strong>{{ object.city }}</p>
+					<p><strong>Complément d'adresse: </strong>{{ object.additional_address_information }}</p>
+					<p><strong>Latitude: </strong>{% if object.latitude %}{{ object.latitude }}{% endif %}</p>
+					<p><strong>Longitude: </strong>{% if object.longitude %}{{ object.longitude }}{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

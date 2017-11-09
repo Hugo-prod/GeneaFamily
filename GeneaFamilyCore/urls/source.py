@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from django.views.generic import UpdateView, DetailView, ListView
+from django.views.generic import UpdateView, DetailView, DeleteView, ListView
 
-from GeneaFamilyCore.models import Source
-from GeneaFamilyCore.forms.source import SourceForm
+from GeneaFamilyCore.models import Source, SourceMember
+from GeneaFamilyCore.forms.source import SourceForm, SourceInvolvedMemberForm
 from GeneaFamilyCore.views.source import *
 
 source_urlpatterns = [
@@ -47,4 +47,22 @@ source_urlpatterns = [
 			paginate_by=20,
 			template_name='geneafamilycore/source/all_source.html'),
 				name='all_source'),
+
+	#####################
+	## INVOLVED MEMBER ##
+	#####################
+
+	# Ajouter un membre (impliqué) à la source
+	url(r'^source/(?P<source_pk>\d+)/member/add$',
+		SourceAddInvolvedMember.as_view(
+			form_class=SourceInvolvedMemberForm,
+			template_name='geneafamilycore/source/forms/add_involved_member.html'),
+				name='source_add_involved_member'),
+
+	# Enlever un membre (impliqué) à la source
+	url(r'^source/involved_member/(?P<pk>\d+)/remove$',
+		SourceDeleteInvolvedMember.as_view(
+			model=SourceMember,
+			template_name='geneafamilycore/source/forms/remove_involved_member.html'),
+				name='source_remove_involved_member'),
 ]

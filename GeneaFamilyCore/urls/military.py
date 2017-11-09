@@ -80,5 +80,5 @@ military_urlpatterns = [
 			model=Military,
 			paginate_by=20,
 			template_name='geneafamilycore/military/all_military.html'),
-				name='all_military'),
+				name='all_militaries'),
 ]

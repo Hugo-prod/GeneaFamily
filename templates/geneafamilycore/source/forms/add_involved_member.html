@@ -2,16 +2,16 @@
 
 {% load bootstrap4 %}
 
-{% block subtitle %}Ajouter un témoin à la naissance de "{{ member }}":{% endblock %}
+{% block subtitle %}Ajouter un membre impliqué dans la source "{{ source }}":{% endblock %}
 
-{% block form_title %}Ajouter un témoin à la naissance de "{{ member }}":{% endblock %}
+{% block form_title %}Ajouter un membre impliqué dans la source "{{ source }}":{% endblock %}
 
 {% block form_body %}
 	<form action="" method="post" class="form">
 		{% csrf_token %}
 		{% bootstrap_form form %}
 		{% buttons %}
-			<a class="btn btn-sm btn-warning" href="{% url 'core:member_detail' member.pk %}">Annuler</a>
+			<a class="btn btn-warning" href="{% url 'core:source_detail' source.pk %}">Annuler</a>
 			<button type="submit" class="btn btn-primary">Valider</button>
 		{% endbuttons %}
 	</form>

@@ -10,14 +10,14 @@
 	<p>Aucun individu à afficher, pour créer un individu maintenant <a href="{% url 'core:create_member' %}">cliquez ici</a>.</p>
 {% endif %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
 			<th>Prénom</th>
 			<th>Nom de famille</th>
 			<th>Genre</th>
-			<th>Actions</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -27,8 +27,15 @@
 			<td><a href="{% url 'core:member_detail' member.pk %}">{{ member.first_name }}</a></td>
 			<td>{{ member.family_name }}</td>
 			<td>{{ member.get_gender_display }}</td>
-			<td>
-				<a href="{% url 'core:delete_member' member.pk %}">Supprimer</a>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:member_detail' member.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_member' member.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_member' member.pk %}">Supprimer</a>
+				</div>
 			</td>
 		</tr>
 	{% empty %}

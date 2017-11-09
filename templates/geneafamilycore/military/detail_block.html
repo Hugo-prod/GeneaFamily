@@ -41,8 +41,8 @@
 				<p><strong>Nez:</strong> {{ object.nose }}</p>
 				<p><strong>Bouche:</strong> {{ object.mouth }}</p>
 				<p><strong>Menton:</strong> {{ object.chin }}</p>
-				<p><strong>Taille:</strong> {{ object.size }}</p>
-				<p><strong>Taille rectifiée:</strong> {{ object.rectified_size }}</p>
+				<p><strong>Taille:</strong> {% if object.size %}{{ object.size }}{% endif %}</p>
+				<p><strong>Taille rectifiée:</strong> {% if object.rectified_size %}{{ object.rectified_size }}{% endif %}</p>
 			</div>
 			<div class="col">
 				<p><strong>Remarques complémentaires:</strong> {{ object.additional_note }}</p>
@@ -68,8 +68,8 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p><strong>Numéro matricule du recrutement:</strong> {{ object.recruitment_matricul_number }}</p>
-				<p><strong>Classe de mobilisation:</strong> {{ object.mobilisation_class }}</p>
+				<p><strong>Numéro matricule du recrutement:</strong> {% if object.recruitment_matricul_number %}{{ object.recruitment_matricul_number }}{% endif %}</p>
+				<p><strong>Classe de mobilisation:</strong> {% if object.mobilisation_class %}{{ object.mobilisation_class }}{% endif %}</p>
 			</div>
 		</div>
 	</div>
@@ -114,7 +114,29 @@
 	<div class="card-body">
 		<div class="row">
 			<div class="col">
-				<p>Inscrit sous le n'°{{ object.recruitment_draw }} de la liste du canton {{ object.canton_recruitment }} </p>
+				<p>Inscrit sous le n'°{% if object.recruitment_draw %}{{ object.recruitment_draw }}{% else %}...{% endif %} de la liste du canton {% if object.canton_recruitment %}{{ object.canton_recruitment }}{% else %}...{% endif %}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- SOURCE -->
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<h4 class="col card-title">Source:</h4>
+			<div class="col-2 dropdown">
+				<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+				<div class="dropdown-menu" aria-strongledby="dropdownMenuButton">
+					<a class="dropdown-item" href="{% url 'core:create_source' object.get_member.pk %}">Ajouter</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col">
+				{% include 'geneafamilycore/source/additional_block.html' with object=object.get_sources member=member %}
 			</div>
 		</div>
 	</div>

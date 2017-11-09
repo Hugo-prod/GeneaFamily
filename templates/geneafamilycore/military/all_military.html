@@ -6,14 +6,14 @@
 
 {% if not object_list %}<p>Aucune fiche militaire à afficher</p>{% endif %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
 			<th>Individu</th>
 			<th>Matricule</th>
 			<th>Classe de mobilisation</th>
-			<th>Actions</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,11 +21,16 @@
 		<tr>
 			<th scope="row">{{ military.pk }}</th>
 			<td><a href="{% url 'core:member_detail' military.get_member.pk %}">{{ military.get_member }}</a></td>
-			<td>{{ military.recruitment_matricul_number }}</td>
-			<td>{{ military.mobilisation_class }}</td>
-			<td>
-				<a href="{% url 'core:military_detail' military.pk %}">Voir la fiche</a>
-				<a href="{% url 'core:delete_military' military.pk %}">Supprimer</a>
+			<td>{% if military.recruitment_matricul_number %}{{ military.recruitment_matricul_number }}{% endif %}</td>
+			<td>{% if military.mobilisation_class %}{{ military.mobilisation_class }}{% endif %}</td>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:military_detail' military.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:delete_military' military.pk %}">Supprimer</a>
+				</div>
 			</td>
 		</tr>
 	{% empty %}

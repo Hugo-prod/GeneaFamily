@@ -25,4 +25,27 @@ class CreateSource(CreateView):
 class DeleteSource(DeleteView):
 
 	def get_success_url(self):
-		return reverse('core:member_detail', args=[self.object.get_member().pk])
+		return reverse('core:member_detail', args=[self.object.member_fk.pk])
+
+
+class SourceAddInvolvedMember(CreateView):
+
+	def form_valid(self, form):
+		source_involved_member_obj = form.save(commit=False)
+		source_involved_member_obj.source_fk = Source.objects.get(pk=self.kwargs['source_pk'])
+		source_involved_member_obj.save()
+		return super(SourceAddInvolvedMember, self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(SourceAddInvolvedMember, self).get_context_data(**kwargs)
+		context['source'] = Source.objects.get(pk=self.kwargs['source_pk'])
+		return context
+
+	def get_success_url(self):
+		return reverse('core:source_detail', args=[self.object.source_fk.pk])
+
+
+class SourceDeleteInvolvedMember(DeleteView):
+
+	def get_success_url(self):
+		return reverse('core:source_detail', args=[self.object.source_fk.pk])

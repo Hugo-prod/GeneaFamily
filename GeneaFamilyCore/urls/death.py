@@ -30,7 +30,6 @@ death_urlpatterns = [
 				name='update_death'),
 
 	# Delete death
-	# Attention delete à partir de la member.death_fk
 	url(r'^death/(?P<pk>\d+)/delete$',
 		DeleteDeath.as_view(
 			model=Death,
@@ -51,7 +50,7 @@ death_urlpatterns = [
 			model=Death,
 			paginate_by=20,
 			template_name='geneafamilycore/death/all_death.html'),
-				name='all_death'),
+				name='all_deaths'),
 
 	#############
 	## WITNESS ##

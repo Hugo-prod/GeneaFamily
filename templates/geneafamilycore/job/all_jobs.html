@@ -3,13 +3,14 @@
 {% block subtitle %}Liste de tous les metiers:{% endblock %}
 
 {% block content %}
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
 			<th>Membre</th>
 			<th>Metier</th>
 			<th>Date</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,10 +20,21 @@
 			<td><a href="{% url 'core:member_detail' job.member_fk.pk %}">{{ job.member_fk }}</a></td>
 			<td><a href="{% url 'core:job_detail' job.pk %}">{{ job.job_name }}</a></td>
 			<td>{{ job.date }}</td>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:job_detail' job.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_job' job.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_job' job.pk %}">Supprimer</a>
+				</div>
+			</td>
 		</tr>
 	{% empty %}
 		<tr>
 			<th scope="row">...</th>
+			<td>...</td>
 			<td>...</td>
 			<td>...</td>
 			<td>...</td>

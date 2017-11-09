@@ -1,0 +1,16 @@
+{% extends 'generic/card_form.html' %}
+
+{% load bootstrap4 %}
+
+{% block subtitle %}Supprimer de l'implication du membre "{{ object.member_fk }}" de la source "{{ object }}":{% endblock %}
+
+{% block form_title %}Supprimer de l'implication du membre "{{ object.member_fk }}" de la source "{{ object }}":{% endblock %}
+
+{% block form_body %}
+	<form action="" method="post" class="form">
+		{% csrf_token %}
+		<p>Comfirmer la suppression de l'implication du membre "{{ object.member_fk }}" de la source "{{ object }}"</p>
+		<a class="btn btn-warning" href="{% url 'core:source_detail' object.pk %}">Annuler</a>
+		<button type="submit" class="btn btn-primary">Valider</button>
+	</form>
+{% endblock %}

@@ -29,7 +29,7 @@
                             <p><strong>Nom: </strong>{{ member.family_name }}</p>
                         </div>
                     </div>
-                    <p><strong>Surnom: </strong>{{ member.pseudonyme }}</p>
+                    {% if member.pseudonyme %}<p><strong>Surnom: </strong>{{ member.pseudonyme }}</p>{% endif %}
                     <div class="row">
                         <div class="col">
                             <p><strong>Genre: </strong>{{ member.get_gender_display }}</p>

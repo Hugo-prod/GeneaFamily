@@ -8,7 +8,7 @@
 <p>Aucun lieu à afficher, pour créer un lieu maintenant <a href="{% url 'core:create_locality' %}">cliquez ici</a>.</p>
 {% endif %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -17,6 +17,7 @@
 			<th>Complément d'adresse</th>
 			<th>Latitude</th>
 			<th>Longitude</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,10 +29,21 @@
 			<td>{{ locality.additional_address_information|truncatechars:50 }}</td>
 			<td>{% if locality.latitude %}{{ locality.latitude }}{% endif %}</td>
 			<td>{% if locality.longitude %}{{ locality.longitude }}{% endif %}</td>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:locality_detail' locality.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_locality' locality.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_locality' locality.pk %}">Supprimer</a>
+				</div>
+			</td>
 		</tr>
 	{% empty %}
 		<tr>
 			<th scope="row">...</th>
+			<td>...</td>
 			<td>...</td>
 			<td>...</td>
 			<td>...</td>

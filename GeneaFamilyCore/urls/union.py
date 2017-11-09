@@ -27,7 +27,6 @@ union_urlpatterns = [
 				name='update_union'),
 
 	# Delete union
-	# Attention delete à partir de la family.union_fk
 	url(r'^union/(?P<pk>\d+)/delete$',
 		DeleteUnion.as_view(
 			model=Union,
@@ -47,7 +46,7 @@ union_urlpatterns = [
 			model=Union,
 			paginate_by=20,
 			template_name='geneafamilycore/union/all_union.html'),
-				name='all_union'),
+				name='all_unions'),
 
 	#############
 	## WITNESS ##

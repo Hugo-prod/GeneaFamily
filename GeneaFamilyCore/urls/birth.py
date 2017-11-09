@@ -46,7 +46,7 @@ birth_urlpatterns = [
 			model=Birth,
 			paginate_by=20,
 			template_name='geneafamilycore/birth/all_birth.html'),
-				name='all_birth'),
+				name='all_births'),
 
 	#############
 	## WITNESS ##

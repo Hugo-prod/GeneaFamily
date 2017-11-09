@@ -11,7 +11,7 @@
 {% endif %}
 
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -19,6 +19,7 @@
 			<th>Père</th>
 			<th>Mère</th>
 			<th>Nombre d'enfant</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +30,16 @@
 			<td>{{ family.father_fk }}</td>
 			<td>{{ family.mother_fk }}</td>
 			<td>{{ family.get_nb_children }}</td>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:family_detail' family.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_family' family.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_family' family.pk %}">Supprimer</a>
+				</div>
+			</td>
 		</tr>
 	{% empty %}
 		<tr>

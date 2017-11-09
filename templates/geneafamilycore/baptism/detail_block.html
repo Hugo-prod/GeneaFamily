@@ -31,6 +31,9 @@
 					<p><strong>Marraine: </strong> {% if object.godmother_fk %}<a href="{% url 'core:member_detail' object.godmother_fk.pk %}">{{ object.godmother_fk }}</a>{% endif %}</p>
                 </div>
             </div>
+            <div class="row">
+                {% include 'geneafamilycore/source/additional_block.html' with object=object.get_sources member=member %}
+            </div>
         </div>
     </div>
 </div>

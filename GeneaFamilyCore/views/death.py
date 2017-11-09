@@ -24,17 +24,16 @@ class CreateDeath(CreateView):
 		member_obj.save()
 		return super(CreateDeath, self).form_valid(form)
 
+	def get_context_data(self, **kwargs):
+		context = super(CreateDeath, self).get_context_data(**kwargs)
+		context['member'] = Member.objects.get(pk=self.kwargs['member_pk'])
+		return context
+
 	def get_success_url(self):
 		return reverse('core:member_detail', args=[self.kwargs['member_pk']])
 
 
 class DeleteDeath(DeleteView):
-
-	def get_context_data(self, **kwargs):
-		context = super(DeleteDeath, self).get_context_data(**kwargs)
-		context['member'] = Member.objects.get(pk=self.object.get_member().pk)
-		print(self.object)
-		return context
 
 	def get_success_url(self):
 		return reverse('core:member_detail', args=[self.object.get_member().pk])
@@ -47,6 +46,11 @@ class DeathAddWitness(CreateView):
 		death_witness_obj.death_fk = Death.objects.get(pk=self.kwargs['death_pk'])
 		death_witness_obj.save()
 		return super(DeathAddWitness, self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(DeathAddWitness, self).get_context_data(**kwargs)
+		context['member'] = Death.objects.get(pk=self.kwargs['death_pk']).get_member()
+		return context
 
 	def get_success_url(self):
 		return reverse(
@@ -79,6 +83,11 @@ class DeathAddComparer(CreateView):
 		death_comparer_obj.death_fk = Death.objects.get(pk=self.kwargs['death_pk'])
 		death_comparer_obj.save()
 		return super(DeathAddComparer, self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(DeathAddComparer, self).get_context_data(**kwargs)
+		context['member'] = Death.objects.get(pk=self.kwargs['death_pk']).get_member()
+		return context
 
 	def get_success_url(self):
 		return reverse(

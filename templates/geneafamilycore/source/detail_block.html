@@ -20,9 +20,36 @@
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    {% for source in object_list %}
-                        <img src="/media/{{ media_url }}{{ source.img_upload }}">
-                    {% endfor %}
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Titre</th>
+                          <th scope="col">Type de source</th>
+                          <th scope="col">URL</th>
+                          <th scope="col">Photos</th>
+                          <th scope="col">Page link</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for source in object_list %}
+                            <tr>
+                                <th scope="row">{{ source.pk }}</th>
+                                <td>{{ source.title }}</td>
+                                <td>{{ source.get_source_type_display }}</td>
+                                <td>{% if source.url_link %}{{ source.url_link }}{% endif %}</td>
+                                <td><a href="/media/{{ media_url }}{{ source.img_upload }}">Photo</a></td>
+                                <td>{% if source.page_link %}{{ source.page_link }}{% endif %}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-primary" href="{% url 'core:source_detail' source.pk %}">Voir</a>
+                                    <a class="btn btn-sm btn-warning" href="{% url 'core:update_source' source.pk %}">Modifier</a>
+                                    <a class="btn btn-sm btn-danger" href="{% url 'core:delete_source' source.pk %}">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -3,6 +3,20 @@
 {% block subtitle %}{{ object.first_name }} {{ object.family_name }}{% endblock %}
 
 {% block extras_nav %}
+	<a href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-home"></i> <span class="d-none d-md-inline">GeneaFamily</span> </a>
+	<div class="collapse" id="menu1">
+		<a href="/" class="list-group-item" data-parent="#menu1"><i class="fa fa-home"></i> Accueil</a>
+		<a href="#menu1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-vcard-o"></i> Membre</a>
+		<div class="collapse" id="menu1sub1">
+			<a href="{% url 'core:create_member' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-pencil"></i> Créer un membre</a>
+			<a href="{% url 'core:all_members' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-group"></i>Tous les membres</a>
+		</div>
+			<a href="#menu1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-group"></i> <span class="d-none d-md-inline">Famille</span></a>
+		<div class="collapse" id="menu1sub2">
+			<a href="{% url 'core:create_family' %}" class="list-group-item" data-parent="#menu1sub2"><i class="fa fa-pencil"></i> Créer une famille</a>
+			<a href="{% url 'core:all_families' %}" class="list-group-item" data-parent="#menu1sub2"><i class="fa fa-group"></i>Toutes les familles</a>
+		</div>
+	</div>
 	<hr>
 	{% include 'geneafamilycore/family/nav_block.html' %}
 	{% include 'geneafamilycore/birth/nav_block.html' %}
@@ -15,23 +29,22 @@
 {% endblock %}
 
 {% block content %}
+<div class="row">
+	<div class="col">
+		<section>
+			<div class="tabs tabs-style-bar">
+				<nav>
+					<ul>
+						<li id="link-section-bar-1" class="tab-current"><a  data-link="#section-bar-1" class="nav-link"><i class="fa fa-address-card"></i> <span>Vue descriptive</span></a></li>
+						<li id="link-section-bar-2"><a  data-link="#section-bar-2" class="nav-link"><i class="fa fa-book"></i> <span>Vue narrative</span></a></li>
+						<li id="link-section-bar-3"><a  data-link="#section-bar-3" class="nav-link"><i class="fa fa-tree"></i> <span>Vue diagramme arbre</span></a></li>
+						<!-- <li id="link-section-bar-4"><a  data-link="#section-bar-4" class="nav-link icon icon-upload"><span>Vue diagramme arbre</span></a></li> -->
+						<!-- <li id="link-section-bar-5"><a  data-link="#section-bar-5" class="nav-link icon icon-tools"><span>Settings</span></a></li> -->
+					</ul>
+				</nav>
+				<div class="content-wrap">
+					<section id="section-bar-1" class="content-current">
 
-<div class="col-12">
-	<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" id="descriptif-tab" data-toggle="tab" href="#descriptif" role="tab" aria-controls="descriptif" aria-selected="true">Vue descriptive</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="narrativ-tab" data-toggle="tab" href="#narrativ" role="tab" aria-controls="narrativ" aria-selected="false">Vue narrative</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="tree-tab" data-toggle="tab" href="#tree" role="tab" aria-controls="tree" aria-selected="false">Vue diagramme Arbre</a>
-		</li>
-	</ul>
-</div>
-
-<div class="tab-content" id="myTabContent">
-	<div class="tab-pane fade show active" id="descriptif" role="tabpanel" aria-labelledby="descriptif-tab">
 		<div class="col-12">
 			{% include 'geneafamilycore/member/detail_block.html' with member=object %}
 		</div>
@@ -89,8 +102,41 @@
 				{% include 'geneafamilycore/source/detail_block.html' with object_list=object.get_sources member=object %}
 			{% endif %}
 		</div>
+
+</section>
+					<section id="section-bar-2"><p>2</p></section>
+					<section id="section-bar-3"><p>3</p></section>
+					<!-- <section id="section-bar-4"><p>4</p></section> -->
+					<!-- <section id="section-bar-5"><p>5</p></section> -->
+				</div>
+			</div>
+		</section>
 	</div>
-	<div class="tab-pane fade" id="narrativ" role="tabpanel" aria-labelledby="narrativ-tab">profile</div>
-	<div class="tab-pane fade" id="tree" role="tabpanel" aria-labelledby="tree-tab">...</div>
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- LOL: redo this things dude -->
+<script type="text/javascript">
+$(function(){
+  $('.nav-link').click(function(){
+    section = $($(this).data('link'));
+    $('#section-bar-1').removeClass('content-current');
+    $('#section-bar-2').removeClass('content-current');
+    $('#section-bar-3').removeClass('content-current');
+    $('#section-bar-4').removeClass('content-current');
+    $('#section-bar-5').removeClass('content-current');
+    section.addClass('content-current');
+
+    $('#link-section-bar-1').removeClass('tab-current');
+    $('#link-section-bar-2').removeClass('tab-current');
+    $('#link-section-bar-3').removeClass('tab-current');
+    $('#link-section-bar-4').removeClass('tab-current');
+    $('#link-section-bar-5').removeClass('tab-current');
+    $(this).parent().addClass('tab-current');
+  });
+});
+</script>
 {% endblock %}

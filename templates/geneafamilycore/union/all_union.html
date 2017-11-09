@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -13,7 +13,7 @@
 			<th>Nom de famille</th>
 			<th>Type</th>
 			<th>Date</th>
-			<th>Actions</th>
+			<th class="text-center">Actions</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,9 +25,15 @@
 			<td>{{ union.get_family.get_family_name }}</td>
 			<td>{{ union.get_union_type_display }}</td>
 			<td>{% if union.start_date %}{{ union.start_date|date:'d/m/Y' }}{% else %}(???){% endif %} : {% if union.end_date %}{{ union.end_date|date:'d/m/Y' }}{% else %}(???){% endif %}</td>
-			<td>
-				<a href="{% url 'core:union_detail' union.pk %}">Voir</a>
-				<a href="{% url 'core:delete_union' union.pk %}">Supprimer</a>
+			<td class="text-center">
+				<button type="button" class="btn btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-cog"></i>
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{% url 'core:union_detail' union.pk %}">Voir</a>
+					<a class="dropdown-item" href="{% url 'core:update_union' union.pk %}">Modifier</a>
+					<a class="dropdown-item" href="{% url 'core:delete_union' union.pk %}">Supprimer</a>
+				</div>
 			</td>
 		</tr>
 	{% empty %}

@@ -10,7 +10,7 @@
 	<form action="" method="post" class="form">
 		{% csrf_token %}
 		<p>Comfirmer la suppression de {{ object.member_fk }} au décès de "{{ member }}"</p>
-		<a class="btn btn-sm btn-warning" href="/">Annuler</a>
+		<a class="btn btn-sm btn-warning" href="{% url 'core:member_detail' member.pk %}">Annuler</a>
 		<button type="submit" class="btn btn-primary">Valider</button>
 	</form>
 {% endblock %}

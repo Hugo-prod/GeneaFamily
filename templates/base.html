@@ -14,26 +14,12 @@
 	<div class="row d-flex d-md-block flex-nowrap wrapper">
 		<div class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show " id="sidebar">
 			<div class="list-group border-0 card text-center text-md-left">
-				<a href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-parent="#sidebar" aria-expanded="false"><i class="fa fa-home"></i> <span class="d-none d-md-inline">GeneaFamily</span> </a>
-				<div class="collapse" id="menu1">
-					<a href="/" class="list-group-item" data-parent="#menu1"><i class="fa fa-home"></i> Accueil</a>
-					<a href="#menu1sub1" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-vcard-o"></i> Membre</a>
-					<div class="collapse" id="menu1sub1">
-						<a href="{% url 'core:create_member' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-pencil"></i> Créer un membre</a>
-						<a href="{% url 'core:all_members' %}" class="list-group-item" data-parent="#menu1sub1"><i class="fa fa-group"></i>Tous les membres</a>
-					</div>
-						<a href="#menu1sub2" class="list-group-item" data-toggle="collapse" aria-expanded="false"><i class="fa fa-group"></i> <span class="d-none d-md-inline">Famille</span></a>
-					<div class="collapse" id="menu1sub2">
-						<a href="{% url 'core:create_family' %}" class="list-group-item" data-parent="#menu3"><i class="fa fa-pencil"></i> Créer une famille</a>
-						<a href="{% url 'core:all_families' %}" class="list-group-item" data-parent="#menu3"><i class="fa fa-group"></i>Toutes les familles</a>
-					</div>
-				</div>
-				{% block extras_nav %}{% endblock %}
+				{% block extras_nav %}{% include 'generic/sidebar.html' %}{% endblock %}
 			</div>
 		</div>
 		<main class="col-md-10 float-right px-5 pt-2 main">
 			<div class="col-12 page-header"><h1>{% block subtitle %}{% endblock %}</h1></div>
-				<div style="padding: 15px;">{% block content %}{% endblock %}</div>
+				<div style="padding: 15px; background-color: #FAFAFA;">{% block content %}{% endblock %}</div>
 		</main>
 	</div>
 </div>
